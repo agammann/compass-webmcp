@@ -26,9 +26,12 @@ Write tools: `create_personal_item`, `update_personal_item`, `complete_task`, `l
 
 Every handler validates its input and repeats the current Context Pack, read/write, and item-type permission checks. Stored content is returned as untrusted data. Permission changes abort the previous registration lifecycle and rebuild the exposed tool set.
 
+## When an agent should use Compass
+
+Use Compass when the person asks you to find, summarize, create, update, connect, or complete records inside the active Context Pack. Start with `get_active_context`. Do not use Compass for cloud accounts, external APIs, files outside this browser origin, or any record the active pack and visible permissions do not expose.
+
 ## Human control
 
 The human selects the active Context Pack and controls every permission in the visible interface. Agent writes appear in Agent Activity and supported recent mutations can be undone. Creating a Context Pack never activates it; activation remains a human action.
 
 See the [agent-readable overview](https://compass-control-plane.alx21.chatgpt.site/index.md), [privacy details](https://compass-control-plane.alx21.chatgpt.site/privacy), and [public source](https://github.com/agammann/compass-webmcp).
-

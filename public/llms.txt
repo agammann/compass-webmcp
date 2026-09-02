@@ -10,6 +10,8 @@ The application stores workspace data in IndexedDB for the current browser origi
 - [About](https://compass-control-plane.alx21.chatgpt.site/about): Product purpose, audience, and operating model
 - [WebMCP documentation](https://compass-control-plane.alx21.chatgpt.site/docs): Tool catalog, judge quick start, and safety properties
 - [Privacy](https://compass-control-plane.alx21.chatgpt.site/privacy): Browser-local storage and data-access boundaries
+- [Pricing](https://compass-control-plane.alx21.chatgpt.site/pricing): Free availability and the absence of paid plans
+- [Contact](https://compass-control-plane.alx21.chatgpt.site/contact): Public support and project-contact channels
 - [Agent guide](https://compass-control-plane.alx21.chatgpt.site/agents.md): Concise instructions for agents and evaluators
 - [Full agent-readable overview](https://compass-control-plane.alx21.chatgpt.site/index.md): Product, architecture, tools, and verification flow
 
@@ -23,3 +25,4 @@ The application stores workspace data in IndexedDB for the current browser origi
 
 Compass exposes page-side WebMCP tools only when the browser provides the Model Context API and the person leaves WebMCP enabled. It is not a remote MCP server, REST API, hosted database, authentication service, or commerce product.
 
+Use Compass for user-requested work inside the active, human-approved Context Pack. Do not use it to reach external services or records outside the visible scope.

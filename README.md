@@ -92,7 +92,8 @@ Compass remains a page-side WebMCP application rather than pretending to be a re
 - `llms.txt`, `index.md`, and `agents.md`
 - `/.well-known/ard.json` with the legacy `ai-catalog.json` alias
 - Canonical metadata, JSON-LD, and a markdown alternate link
-- Crawlable `/about`, `/docs`, and `/privacy` pages
+- Crawlable `/about`, `/docs`, `/privacy`, `/pricing`, and `/contact` pages with markdown twins
+- An honest `/auth.md` explanation of browser-local authorization and the absence of accounts or OAuth
 
 These resources document the existing application and its real tool surface; they do not introduce a remote API, account system, or payment flow.
 
@@ -162,4 +163,3 @@ This is local-first, not encrypted-at-rest. Any script running on the same trust
 ## License
 
 MIT — see [LICENSE](LICENSE).
-

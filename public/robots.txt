@@ -1,6 +1,23 @@
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 User-agent: *
 Allow: /
 
 Sitemap: https://compass-control-plane.alx21.chatgpt.site/sitemap.xml
 Agentmap: https://compass-control-plane.alx21.chatgpt.site/.well-known/ard.json
-

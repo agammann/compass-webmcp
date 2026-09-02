@@ -5,7 +5,10 @@ export const metadata: Metadata = {
   title: 'Compass WebMCP Documentation',
   description:
     'Judge quick start, WebMCP tool catalog, permission behavior, and verification guidance for Compass.',
-  alternates: { canonical: '/docs' },
+  alternates: {
+    canonical: '/docs',
+    types: { 'text/markdown': '/docs.md' },
+  },
 };
 
 const readTools = [
@@ -41,6 +44,16 @@ export default function DocsPage() {
           <li>Watch the task and agent activity appear in the visible interface.</li>
           <li>Disable Allow write and confirm write tools disappear.</li>
         </ol>
+      </section>
+      <section>
+        <h2 className="text-xl font-semibold text-slate-100">When an agent should use Compass</h2>
+        <p className="mt-3">
+          Use Compass when the person asks an agent to find, summarize, create,
+          update, connect, or complete records inside the currently active Context
+          Pack. Start with <code>get_active_context</code>. Do not use Compass to
+          reach cloud accounts, external APIs, files outside this browser origin,
+          or any item the active pack and permission switches do not expose.
+        </p>
       </section>
       <section>
         <h2 className="text-xl font-semibold text-slate-100">Read tools</h2>
@@ -81,4 +94,3 @@ export default function DocsPage() {
     </InformationPage>
   );
 }
-

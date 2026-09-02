@@ -5,7 +5,10 @@ export const metadata: Metadata = {
   title: 'About Compass',
   description:
     'What Compass is, who it is for, and how its human-controlled agent boundary works.',
-  alternates: { canonical: '/about' },
+  alternates: {
+    canonical: '/about',
+    types: { 'text/markdown': '/about.md' },
+  },
 };
 
 export default function AboutPage() {

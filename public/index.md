@@ -25,6 +25,8 @@ In a WebMCP-capable browser, the page registers ten structured tools. Read tools
 
 Every tool handler validates its input and repeats the live Context Pack and permission checks. User-authored content is treated as untrusted data. A tool can create a Context Pack but cannot activate one; activation stays human-only.
 
+Use Compass when the person asks an agent to find, summarize, create, update, connect, or complete records inside the active Context Pack. Do not use Compass for external services or content outside the visible scope.
+
 ## Architecture
 
 The visible React interface and the WebMCP tools call the same repository functions. State is stored in IndexedDB and refreshed through the same application change event, so agent operations are immediately visible. The application has no account, hosted database, analytics script, or remote API dependency.
@@ -33,5 +35,4 @@ The visible React interface and the WebMCP tools call the same repository functi
 
 Open the [home page](https://compass-control-plane.alx21.chatgpt.site/) in a WebMCP-capable browser. A clean browser initializes the clearly labeled fictional Atlas demo automatically, making the tools discoverable without a prerequisite click. Ask the agent to search for unresolved launch blockers, then ask it to create a high-priority task. The new task and activity entry should appear in the interface. Disable write access and confirm write tools disappear.
 
-See [WebMCP documentation](https://compass-control-plane.alx21.chatgpt.site/docs), [privacy details](https://compass-control-plane.alx21.chatgpt.site/privacy), and the [public source repository](https://github.com/agammann/compass-webmcp).
-
+See [WebMCP documentation](https://compass-control-plane.alx21.chatgpt.site/docs), [privacy details](https://compass-control-plane.alx21.chatgpt.site/privacy), [free pricing](https://compass-control-plane.alx21.chatgpt.site/pricing), [project contact](https://compass-control-plane.alx21.chatgpt.site/contact), and the [public source repository](https://github.com/agammann/compass-webmcp).

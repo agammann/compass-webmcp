@@ -9,6 +9,10 @@ last-updated: 2026-09-02
 
 Compass is a browser-local personal knowledge workspace with page-side WebMCP tools. Its purpose is to let a person expose a temporary, explicit subset of personal context to an agent.
 
+## When to use Compass
+
+Use Compass when the person asks you to find, summarize, create, update, connect, or complete notes, tasks, bookmarks, or snippets inside the active Context Pack. Do not use Compass to reach cloud accounts, external APIs, files outside this browser origin, or records the active pack and visible permissions do not expose.
+
 ## Before using a tool
 
 1. Call `get_active_context` to understand the human-selected Context Pack and current permissions.
@@ -44,4 +48,3 @@ Tools return concise objects with `ok: false`, a stable error code, and a human-
 - Documentation: https://compass-control-plane.alx21.chatgpt.site/docs
 - Privacy: https://compass-control-plane.alx21.chatgpt.site/privacy
 - Source: https://github.com/agammann/compass-webmcp
-

@@ -5,7 +5,10 @@ export const metadata: Metadata = {
   title: 'Compass Privacy and Data Handling',
   description:
     'How Compass stores browser-local data and constrains what page-side WebMCP tools can access.',
-  alternates: { canonical: '/privacy' },
+  alternates: {
+    canonical: '/privacy',
+    types: { 'text/markdown': '/privacy.md' },
+  },
 };
 
 export default function PrivacyPage() {

@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   applicationName: 'Compass',
   alternates: {
     canonical: '/',
+    types: {
+      'text/markdown': '/index.md',
+    },
   },
   category: 'productivity',
   keywords: [
@@ -64,4 +67,3 @@ export default function RootLayout({
     </html>
   );
 }
-
