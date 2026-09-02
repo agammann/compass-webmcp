@@ -67,7 +67,7 @@ ContextDock registers tools with `document.modelContext.registerTool()` and an `
 
 | Tool | Mode | Purpose |
 | --- | --- | --- |
-| `get_active_context` | Read | Return active Space, Pack, permissions, and accessible count |
+| `get_active_context` | Read | Return the active Pack, permissions, and accessible count |
 | `list_spaces` | Read | List accessible Spaces and item counts |
 | `search_personal_context` | Read | Deterministically search scoped items |
 | `get_personal_item` | Read | Retrieve one scoped item by ID |
@@ -78,7 +78,21 @@ ContextDock registers tools with `document.modelContext.registerTool()` and an `
 | `link_personal_items` | Write | Create a typed relation between two scoped items |
 | `create_context_pack` | Write | Create, but never auto-activate, a new Pack |
 
-Tool inputs use closed JSON Schemas (`additionalProperties: false`) and Zod runtime validation. Responses are concise structured objects with stable error codes. Read tools use `readOnlyHint`; content-bearing results use `untrustedContentHint`; write tools are annotated as destructive when they mutate state.
+Tool inputs use closed JSON Schemas (`additionalProperties: false`) and Zod runtime validation. Responses are concise structured objects with stable error codes. Read tools use `readOnlyHint`; content-bearing results use `untrustedContentHint`; write tools omit the read-only hint and describe their mutation explicitly.
+
+Registration feature-detects `document.modelContext` and waits briefly for browsers that inject the Model Context API during page startup. Permission changes abort the prior registration lifecycle before registering the newly allowed tool set.
+
+## Agent discovery
+
+ContextDock remains a page-side WebMCP application rather than pretending to be a remote MCP or REST service. It also publishes crawlable product and trust information so agents can identify the site before JavaScript runs:
+
+- `sitemap.xml` and an agent-welcoming `robots.txt`
+- `llms.txt`, `index.md`, and `agents.md`
+- `/.well-known/ard.json` with the legacy `ai-catalog.json` alias
+- Canonical metadata, JSON-LD, and a markdown alternate link
+- Crawlable `/about`, `/docs`, and `/privacy` pages
+
+These resources document the existing application and its real tool surface; they do not introduce a remote API, account system, or payment flow.
 
 ## Architecture
 

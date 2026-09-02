@@ -48,7 +48,10 @@ export function ContextDockApp() {
   useEffect(() => {
     if (!settings) return;
     let cancelled = false;
-    void registerContextDockTools(settings).then((state) => {
+    void registerContextDockTools(settings, {
+      contextTimeoutMs: 8_000,
+      pollIntervalMs: 100,
+    }).then((state) => {
       if (!cancelled) setWebmcp({ supported: state.supported, registered: state.registered, ready: true, error: state.error });
     });
     return () => { cancelled = true; unregisterContextDockTools(); };

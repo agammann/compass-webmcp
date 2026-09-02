@@ -10,6 +10,21 @@ export const metadata: Metadata = {
   description:
     'A local-first workspace that exposes only the personal context and capabilities you approve through WebMCP.',
   applicationName: 'ContextDock',
+  alternates: {
+    canonical: '/',
+  },
+  category: 'productivity',
+  keywords: [
+    'WebMCP',
+    'local-first',
+    'personal knowledge workspace',
+    'agent context',
+    'Context Packs',
+  ],
+  robots: {
+    index: true,
+    follow: true,
+  },
   icons: { icon: '/favicon.svg' },
   openGraph: {
     title: 'ContextDock — Your Personal WebMCP Control Plane',
@@ -32,6 +47,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="ai-catalog"
+          type="application/ai-catalog+json"
+          href="/.well-known/ard.json"
+        />
+        <link
+          rel="alternate"
+          type="text/markdown"
+          href="/index.md"
+          title="ContextDock agent-readable overview"
+        />
+      </head>
       <body className="antialiased">{children}</body>
     </html>
   );

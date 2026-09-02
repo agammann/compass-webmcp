@@ -34,5 +34,7 @@ The CSP currently permits inline scripts and styles for Vinext compatibility. Ti
 - Denied operations are logged and Undo restores a write
 - Mobile layout and keyboard focus are usable
 - Social image and metadata resolve at the production origin
+- Raw HTML identifies ContextDock without JavaScript and includes canonical and JSON-LD metadata
+- `sitemap.xml`, `llms.txt`, `agents.md`, `index.md`, and both ARD catalog paths resolve with their intended content
 - No secrets, real personal data, source maps containing secrets, or machine-specific paths are shipped
 - Deployment URL is copied into the README and submission only after verification

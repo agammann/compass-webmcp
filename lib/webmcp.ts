@@ -114,18 +114,50 @@ export function getModelContext(): ModelContext | undefined {
   return undefined;
 }
 
+async function waitForModelContext(
+  timeoutMs: number,
+  pollIntervalMs: number,
+  signal: AbortSignal,
+) {
+  const startedAt = Date.now();
+  let context = getModelContext();
+  while (!context && !signal.aborted && Date.now() - startedAt < timeoutMs) {
+    await new Promise<void>((resolve) => {
+      const finish = () => {
+        globalThis.clearTimeout(timeout);
+        signal.removeEventListener('abort', finish);
+        resolve();
+      };
+      const timeout = globalThis.setTimeout(finish, pollIntervalMs);
+      signal.addEventListener('abort', finish, { once: true });
+    });
+    context = getModelContext();
+  }
+  return context;
+}
+
 export function exposedToolInfo(settings?: AppSettings) {
   if (!settings?.permissions.webmcpEnabled) return [];
   return TOOL_INFO.filter(([, mode]) => mode === 'read' ? settings.permissions.readEnabled || mode === 'read' : settings.permissions.writeEnabled)
     .filter(([name, mode]) => name === 'get_active_context' || (mode === 'read' ? settings.permissions.readEnabled : settings.permissions.writeEnabled));
 }
 
-export async function registerContextDockTools(settings: AppSettings) {
+export async function registerContextDockTools(
+  settings: AppSettings,
+  options: { contextTimeoutMs?: number; pollIntervalMs?: number } = {},
+) {
   activeController?.abort(); activeController = undefined;
-  const context = getModelContext();
-  if (!context) return { supported: false, registered: [] as string[] };
+  const controller = new AbortController(); activeController = controller;
+  const context = await waitForModelContext(
+    options.contextTimeoutMs ?? 0,
+    Math.max(10, options.pollIntervalMs ?? 100),
+    controller.signal,
+  );
+  if (!context || controller.signal.aborted || activeController !== controller) {
+    return { supported: false, registered: [] as string[] };
+  }
   if (!settings.permissions.webmcpEnabled) return { supported: true, registered: [] as string[] };
-  const controller = new AbortController(); activeController = controller; const definitions = createDefinitions(settings); const registered: string[] = [];
+  const definitions = createDefinitions(settings); const registered: string[] = [];
   for (const definition of definitions) {
     try { await context.registerTool(definition, { signal: controller.signal }); registered.push(definition.name); }
     catch { controller.abort(); if (activeController === controller) activeController = undefined; return { supported: true, registered, error: 'The browser rejected one or more WebMCP registrations.' }; }

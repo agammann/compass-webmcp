@@ -65,6 +65,25 @@ describe('writes, task completion, and undo', () => {
 });
 
 describe('WebMCP registration lifecycle and integration', () => {
+  it('waits briefly for a browser that injects Model Context after hydration', async () => {
+    const registrations: string[] = [];
+    const pending = registerContextDockTools(demoSettings, {
+      contextTimeoutMs: 100,
+      pollIntervalMs: 10,
+    });
+    globalThis.setTimeout(() => {
+      (globalThis as { document?: unknown }).document = {
+        modelContext: {
+          registerTool: (tool: { name: string }) => registrations.push(tool.name),
+        },
+      };
+    }, 15);
+    const result = await pending;
+    expect(result.supported).toBe(true);
+    expect(result.registered).toContain('get_active_context');
+    expect(registrations).toContain('create_personal_item');
+  });
+
   it('aborts old registrations and changes exposed write tools', async () => {
     const registrations: Array<{ tool: { name: string; execute: (args: unknown) => Promise<unknown> }; signal?: AbortSignal }> = [];
     (globalThis as { document?: unknown }).document = { modelContext: { registerTool: (tool: { name: string; execute: (args: unknown) => Promise<unknown> }, options?: { signal?: AbortSignal }) => { registrations.push({ tool, signal: options?.signal }); } } };

@@ -3,3 +3,14 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Referrer-Policy: strict-origin-when-cross-origin
   X-Content-Type-Options: nosniff
+
+/*.md
+  Content-Type: text/markdown; charset=utf-8
+
+/.well-known/ard.json
+  Content-Type: application/ai-catalog+json; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/.well-known/ai-catalog.json
+  Content-Type: application/ai-catalog+json; charset=utf-8
+  Access-Control-Allow-Origin: *

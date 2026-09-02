@@ -1,0 +1,49 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "ContextDock",
+    "identifier": "contextdock-control-plane.alx21.chatgpt.site",
+    "documentationUrl": "https://contextdock-control-plane.alx21.chatgpt.site/docs",
+    "logoUrl": "https://contextdock-control-plane.alx21.chatgpt.site/favicon.svg"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:contextdock-control-plane.alx21.chatgpt.site:content:agent-guide",
+      "displayName": "ContextDock agent guide",
+      "type": "text/markdown",
+      "url": "https://contextdock-control-plane.alx21.chatgpt.site/agents.md",
+      "description": "Agent-facing description of ContextDock's ten page-side WebMCP tools, permission boundary, usage order, and error behavior.",
+      "tags": ["webmcp", "local-first", "personal-context", "permissions"],
+      "capabilities": ["search-context", "manage-tasks", "audit-actions", "undo-writes"],
+      "representativeQueries": [
+        "search my approved personal context",
+        "create a task in my active Context Pack",
+        "show what the agent changed"
+      ]
+    },
+    {
+      "identifier": "urn:air:contextdock-control-plane.alx21.chatgpt.site:content:llms-index",
+      "displayName": "ContextDock LLM index",
+      "type": "text/plain",
+      "url": "https://contextdock-control-plane.alx21.chatgpt.site/llms.txt",
+      "description": "Concise product identity, scope, documentation links, and public evidence for ContextDock.",
+      "tags": ["llms-txt", "documentation", "webmcp"],
+      "representativeQueries": [
+        "what is ContextDock",
+        "who is ContextDock for"
+      ]
+    },
+    {
+      "identifier": "urn:air:contextdock-control-plane.alx21.chatgpt.site:content:documentation",
+      "displayName": "ContextDock WebMCP documentation",
+      "type": "text/html",
+      "url": "https://contextdock-control-plane.alx21.chatgpt.site/docs",
+      "description": "Crawlable documentation for ContextDock's WebMCP tool catalog, judge flow, and safety properties.",
+      "tags": ["documentation", "webmcp", "tool-catalog"],
+      "representativeQueries": [
+        "which WebMCP tools does ContextDock expose",
+        "how do I test ContextDock"
+      ]
+    }
+  ]
+}

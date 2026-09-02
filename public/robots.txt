@@ -1,2 +1,5 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://contextdock-control-plane.alx21.chatgpt.site/sitemap.xml
+Agentmap: https://contextdock-control-plane.alx21.chatgpt.site/.well-known/ard.json
