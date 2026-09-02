@@ -1,6 +1,6 @@
 # Deployment
 
-Compass is a client-first Vinext application prepared for Cloudflare Workers and OpenAI Sites. The browser database is origin-scoped, so changing the production origin creates a separate empty workspace unless the user exports and imports a backup.
+Compass is a client-first Vinext application prepared for Cloudflare Workers and OpenAI Sites. The browser database is origin-scoped, so changing the production origin creates a separate workspace unless the user exports and imports a backup. A genuinely clean origin initializes the clearly labeled fictional Atlas demo once so WebMCP tools are discoverable before any prerequisite click; a user-cleared workspace remains empty.
 
 ## Production build
 
@@ -38,3 +38,4 @@ The CSP currently permits inline scripts and styles for Vinext compatibility. Ti
 - `sitemap.xml`, `llms.txt`, `agents.md`, `index.md`, and both ARD catalog paths resolve with their intended content
 - No secrets, real personal data, source maps containing secrets, or machine-specific paths are shipped
 - Deployment URL is copied into the README and submission only after verification
+

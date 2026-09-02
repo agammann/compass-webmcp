@@ -4,7 +4,7 @@ import { atlasPack, demoItems, demoSettings } from '@/lib/seed';
 import { assertAgentAccess, itemIsInPack } from '@/lib/permissions';
 import { rankItems } from '@/lib/search';
 import {
-  completeTask, db, getSnapshot, importWorkspace, itemInputSchema, loadDemoWorkspace,
+  clearAllLocalData, completeTask, db, getOrInitializeDemoSnapshot, getSnapshot, importWorkspace, itemInputSchema, loadDemoWorkspace,
   undoActivity, updateSettings,
 } from '@/lib/repository';
 import { registerCompassTools, unregisterCompassTools } from '@/lib/webmcp';
@@ -65,6 +65,17 @@ describe('writes, task completion, and undo', () => {
 });
 
 describe('WebMCP registration lifecycle and integration', () => {
+  it('initializes fictional demo context on a clean public origin', async () => {
+    const snapshot = await getOrInitializeDemoSnapshot();
+    expect(snapshot.settings).toMatchObject({ initialized: true, activePackId: 'pack-atlas-launch' });
+    expect(snapshot.items).toHaveLength(21);
+
+    await clearAllLocalData();
+    const empty = await getOrInitializeDemoSnapshot();
+    expect(empty.settings?.initialized).toBe(true);
+    expect(empty.items).toHaveLength(0);
+  });
+
   it('waits briefly for a browser that injects Model Context after hydration', async () => {
     const registrations: string[] = [];
     const pending = registerCompassTools(demoSettings, {
@@ -115,3 +126,4 @@ describe('WebMCP registration lifecycle and integration', () => {
     expect((await getSnapshot()).items.length).toBe(before + 1);
   });
 });
+

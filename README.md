@@ -33,8 +33,8 @@ Personal agents need useful context, but giving an agent an entire personal work
    ```
 
 2. Open `http://localhost:3000` in a browser with WebMCP support, or use the live demo above.
-3. Choose **Load Demo Workspace**.
-4. Confirm **Atlas Launch** is active and WebMCP, Read, and Write are enabled.
+3. A clean browser automatically opens the clearly labeled fictional **Atlas Launch** demo so page-side tools are discoverable immediately.
+4. Confirm WebMCP, Read, and Write are enabled.
 5. Ask the agent:
 
    > Search my current context for unresolved launch blockers. Summarize them, then create one high-priority task for the most urgent blocker.
@@ -58,7 +58,7 @@ The in-app **Try the WebMCP demo** dialog contains these prompts and a short acc
 - Item create, edit, complete/reopen, and relation linking
 - Human-readable agent audit trail with denial entries and reversible writes
 - Versioned JSON export/import with strict validation and a 2 MB import limit
-- First-run demo or empty workspace choices
+- Immediate fictional demo initialization on a clean origin, with empty/reset controls in Settings
 - Responsive dashboard and permission panel
 - Keyboard-visible focus, semantic labels, reduced-motion support, and readable empty/error states
 - No authentication, cloud database, analytics, API key, or hidden remote dependency

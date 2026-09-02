@@ -75,13 +75,25 @@ export async function getSnapshot(): Promise<WorkspaceSnapshot> {
   return { settings, spaces, items, packs, activity, relations };
 }
 
-export async function loadDemoWorkspace() {
+async function replaceWithDemoWorkspace() {
   await db.transaction('rw', [db.spaces, db.items, db.packs, db.settings, db.activity, db.relations, db.undo], async () => {
     await Promise.all([db.spaces.clear(), db.items.clear(), db.packs.clear(), db.activity.clear(), db.relations.clear(), db.undo.clear()]);
     await db.spaces.bulkPut(demoSpaces); await db.items.bulkPut(demoItems); await db.packs.put(atlasPack); await db.settings.put(structuredClone(demoSettings));
     await db.activity.put({ id: uid('activity'), timestamp: iso(), actor: 'demo', tool: 'demo_workspace', operation: 'loaded', result: 'Loaded fictional Project Atlas workspace', status: 'success' });
   });
+}
+
+export async function loadDemoWorkspace() {
+  await replaceWithDemoWorkspace();
   notifyChange();
+}
+
+export async function getOrInitializeDemoSnapshot(): Promise<WorkspaceSnapshot> {
+  const current = await getSnapshot();
+  if (current.settings) return current;
+
+  await replaceWithDemoWorkspace();
+  return getSnapshot();
 }
 
 export async function startEmptyWorkspace() {
@@ -91,7 +103,7 @@ export async function startEmptyWorkspace() {
 }
 
 export async function clearAllLocalData() {
-  await db.delete(); await db.open(); notifyChange();
+  await startEmptyWorkspace();
 }
 
 export async function updateSettings(patch: Partial<Omit<AppSettings, 'id'>>) {
@@ -201,3 +213,4 @@ export async function importWorkspace(text: string) {
     await db.activity.put({ id: uid('activity'), timestamp: iso(), actor: 'human', tool: 'import_json', operation: 'imported workspace', result: `Imported ${bundle.items.length} items`, status: 'success' });
   }); notifyChange();
 }
+

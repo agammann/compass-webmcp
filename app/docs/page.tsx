@@ -34,7 +34,7 @@ export default function DocsPage() {
         <h2 className="text-xl font-semibold text-slate-100">Judge quick start</h2>
         <ol className="mt-3 list-decimal space-y-2 pl-5">
           <li>Open the home page in a WebMCP-capable browser.</li>
-          <li>Select Load Demo Workspace on first launch.</li>
+          <li>On a clean browser, confirm the fictional Atlas Launch demo initialized automatically.</li>
           <li>Confirm the Atlas Launch Context Pack is active.</li>
           <li>Ask the agent to search for unresolved launch blockers.</li>
           <li>Ask it to create a high-priority task for the most urgent blocker.</li>
