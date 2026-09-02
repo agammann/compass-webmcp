@@ -36,7 +36,7 @@ const structuredData = {
       sameAs: [
         'https://github.com/agammann/compass-webmcp',
         'https://devpost.com/software/contextdock-upim8b',
-        'https://youtu.be/DtfjV9JT3Xk',
+        'https://youtu.be/s5Jl8F18l5I',
       ],
     },
   ],

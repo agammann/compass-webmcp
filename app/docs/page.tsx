@@ -75,9 +75,10 @@ export default function DocsPage() {
       <section>
         <h2 className="text-xl font-semibold text-slate-100">Source and demo</h2>
         <p className="mt-3">
-          Review the <a className="text-cyan-300 hover:text-cyan-200" href="https://github.com/agammann/compass-webmcp">public MIT-licensed source</a> or watch the <a className="text-cyan-300 hover:text-cyan-200" href="https://youtu.be/DtfjV9JT3Xk">narrated demo</a>.
+          Review the <a className="text-cyan-300 hover:text-cyan-200" href="https://github.com/agammann/compass-webmcp">public MIT-licensed source</a> or watch the <a className="text-cyan-300 hover:text-cyan-200" href="https://youtu.be/s5Jl8F18l5I">narrated demo</a>.
         </p>
       </section>
     </InformationPage>
   );
 }
+

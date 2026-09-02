@@ -1,55 +1,45 @@
-# Compass demo script
+# Compass narrated demo
 
-Target length: 2 minutes 20 seconds
+- Public video: https://youtu.be/s5Jl8F18l5I
+- Runtime: 2 minutes 35 seconds
+- Source: real production WebMCP calls and visible Compass state
+- Demo data: fictional Project Atlas workspace
 
-## 0:00–0:15 — Problem
+## Storyboard
 
-**Screen:** Compass first launch.
+### 0:00–0:13 — Compass
 
-**Voiceover:** “Personal agents are useful when they know what we are working on, but giving an agent an entire personal workspace is too broad. Compass is a local-first WebMCP control plane where the user decides exactly what context and capabilities are available.”
+Introduce Compass as a local-first personal context control plane built for WebMCP. Establish that the demonstration uses the production site, its live structured tools, and fictional data.
 
-Click **Load Demo Workspace**.
+### 0:13–0:32 — Human-selected boundary
 
-## 0:15–0:38 — Product and boundary
+Show the Atlas Launch Context Pack with 21 accessible items. Explain browser-local storage and the visible WebMCP, read, write, and item-type permission controls.
 
-**Screen:** Dashboard, Atlas Launch card, Agent Access panel.
+### 0:32–0:50 — Typed tools
 
-**Voiceover:** “The fictional Project Atlas workspace contains notes, tasks, bookmarks, and snippets stored in IndexedDB. The active Context Pack is Atlas Launch. It scopes the agent to this project and these four item types. The switches on the right control WebMCP, reads, and writes in real time.”
+Open the exposed-tool dialog. Show ten registered page-side tools—five reads and five writes—with closed schemas and safety annotations.
 
-Open **View 10 exposed tools** briefly.
+### 0:50–1:10 — Real WebMCP search
 
-## 0:38–1:10 — Primary WebMCP flow
+Call `search_personal_context` for “unresolved launch blockers” with a five-result limit. Show Launch Readiness ranked first and the corresponding visible search state.
 
-**Screen:** Supported agent browser beside Compass.
+### 1:10–1:30 — Agent-to-UI synchronization
 
-Ask: “Search my current context for unresolved launch blockers. Summarize them, then create one high-priority task for the most urgent blocker.”
+Call `create_personal_item` for the urgent DNS blocker. Show the new high-priority task, the item count changing from 21 to 22, and Agent Activity updating immediately.
 
-**Voiceover:** “The agent calls a typed search tool, receives deterministic results from the active Pack, and creates a task through a validated write tool. It does not inspect pixels or simulate form entry.”
+### 1:30–1:49 — Permission revocation
 
-Show the new task appearing in the workspace and Agent Activity.
+Turn Allow write off. Show the registry reduced to five read tools, every mutation marked not exposed, and a fresh `create_personal_item` call rejected as unavailable.
 
-## 1:10–1:35 — Permission enforcement
+### 1:49–2:06 — Audit trail
 
-Turn **Allow write** off. Open the exposed-tools list, showing only read tools.
+Show the readable agent event with actor, tool name, timestamp, and the bounded Undo action.
 
-Ask: “Create a task called Publish final release.”
+### 2:06–2:20 — Human undo
 
-**Voiceover:** “Turning off writes unregisters the write tools immediately. Compass also repeats the check inside every handler, so a stale invocation cannot bypass the user’s current choice. Denials are structured and auditable.”
+Use Undo. Show the task removed, the item count restored to 21, and the reversal recorded without erasing agent history.
 
-## 1:35–1:55 — Undo and transparency
+### 2:20–2:35 — Close
 
-Re-enable writes, create a small task if needed, open **Activity**, and click **Undo**.
+Summarize the proof: scoped context, structured actions, live interface synchronization, permission enforcement, and human undo. Close with “Your personal context. Your rules. Your agent.”
 
-**Voiceover:** “Successful agent writes include a readable activity entry and a bounded Undo action. The human can inspect what happened and restore the previous state without trusting an opaque automation history.”
-
-## 1:55–2:12 — Local-first completeness
-
-Show Spaces, Context Packs, and Settings.
-
-**Voiceover:** “Compass remains a complete personal workspace without WebMCP. Users can organize Spaces, build temporary Packs, link items, complete tasks, and export or validate-import a versioned JSON backup. There is no account, server database, or API key.”
-
-## 2:12–2:20 — Close
-
-Return to Dashboard.
-
-**Voiceover:** “Compass: your personal context, your rules, your agent.”

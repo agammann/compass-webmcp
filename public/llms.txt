@@ -16,7 +16,7 @@ The application stores workspace data in IndexedDB for the current browser origi
 ## Public evidence
 
 - [Source code](https://github.com/agammann/compass-webmcp): MIT-licensed implementation
-- [Narrated demo](https://youtu.be/DtfjV9JT3Xk): Product and WebMCP walkthrough
+- [Narrated demo](https://youtu.be/s5Jl8F18l5I): Real WebMCP search, synchronized UI mutation, permission revocation, audit, and undo
 - [Devpost project](https://devpost.com/software/contextdock-upim8b): WebMCP Challenge submission
 
 ## Important scope
