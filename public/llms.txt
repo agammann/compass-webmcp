@@ -6,12 +6,12 @@ The application stores workspace data in IndexedDB for the current browser origi
 
 ## Primary pages
 
-- [Home](https://contextdock-control-plane.alx21.chatgpt.site/): Interactive local-first workspace and product overview
-- [About](https://contextdock-control-plane.alx21.chatgpt.site/about): Product purpose, audience, and operating model
-- [WebMCP documentation](https://contextdock-control-plane.alx21.chatgpt.site/docs): Tool catalog, judge quick start, and safety properties
-- [Privacy](https://contextdock-control-plane.alx21.chatgpt.site/privacy): Browser-local storage and data-access boundaries
-- [Agent guide](https://contextdock-control-plane.alx21.chatgpt.site/agents.md): Concise instructions for agents and evaluators
-- [Full agent-readable overview](https://contextdock-control-plane.alx21.chatgpt.site/index.md): Product, architecture, tools, and verification flow
+- [Home](https://compass-control-plane.alx21.chatgpt.site/): Interactive local-first workspace and product overview
+- [About](https://compass-control-plane.alx21.chatgpt.site/about): Product purpose, audience, and operating model
+- [WebMCP documentation](https://compass-control-plane.alx21.chatgpt.site/docs): Tool catalog, judge quick start, and safety properties
+- [Privacy](https://compass-control-plane.alx21.chatgpt.site/privacy): Browser-local storage and data-access boundaries
+- [Agent guide](https://compass-control-plane.alx21.chatgpt.site/agents.md): Concise instructions for agents and evaluators
+- [Full agent-readable overview](https://compass-control-plane.alx21.chatgpt.site/index.md): Product, architecture, tools, and verification flow
 
 ## Public evidence
 
@@ -22,3 +22,4 @@ The application stores workspace data in IndexedDB for the current browser origi
 ## Important scope
 
 Compass exposes page-side WebMCP tools only when the browser provides the Model Context API and the person leaves WebMCP enabled. It is not a remote MCP server, REST API, hosted database, authentication service, or commerce product.
+

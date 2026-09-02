@@ -74,6 +74,7 @@ TypeScript, React, Vite, Vinext, IndexedDB, Dexie, Zod, Vitest, WebMCP, Cloudfla
 
 ## Published links
 
-- Live app: https://contextdock-control-plane.alx21.chatgpt.site
+- Live app: https://compass-control-plane.alx21.chatgpt.site
 - Public repository: https://github.com/agammann/compass-webmcp
 - Demo video: https://youtu.be/DtfjV9JT3Xk
+

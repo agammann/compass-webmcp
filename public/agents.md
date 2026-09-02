@@ -1,7 +1,7 @@
 ---
 title: Compass agent guide
 description: How agents and evaluators should understand and use Compass
-canonical: https://contextdock-control-plane.alx21.chatgpt.site/agents.md
+canonical: https://compass-control-plane.alx21.chatgpt.site/agents.md
 last-updated: 2026-09-02
 ---
 
@@ -40,7 +40,8 @@ Tools return concise objects with `ok: false`, a stable error code, and a human-
 
 ## Public references
 
-- Product: https://contextdock-control-plane.alx21.chatgpt.site/
-- Documentation: https://contextdock-control-plane.alx21.chatgpt.site/docs
-- Privacy: https://contextdock-control-plane.alx21.chatgpt.site/privacy
+- Product: https://compass-control-plane.alx21.chatgpt.site/
+- Documentation: https://compass-control-plane.alx21.chatgpt.site/docs
+- Privacy: https://compass-control-plane.alx21.chatgpt.site/privacy
 - Source: https://github.com/agammann/compass-webmcp
+

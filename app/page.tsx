@@ -1,7 +1,7 @@
 import { CompassApp } from '@/components/compass-app';
 import Link from 'next/link';
 
-const siteUrl = 'https://contextdock-control-plane.alx21.chatgpt.site';
+const siteUrl = 'https://compass-control-plane.alx21.chatgpt.site';
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -100,3 +100,4 @@ export default function Home() {
     </>
   );
 }
+

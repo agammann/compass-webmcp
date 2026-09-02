@@ -6,7 +6,7 @@
 
 Compass is a local-first personal knowledge workspace and WebMCP control plane. It stores notes, tasks, bookmarks, and snippets in the browser, lets the user assemble temporary Context Packs, and exposes only the tools and records allowed by the active pack and permission switches.
 
-**Live demo:** https://contextdock-control-plane.alx21.chatgpt.site
+**Live demo:** https://compass-control-plane.alx21.chatgpt.site
 
 The project is designed for the [WebMCP Challenge](https://openai.com/webmcp-challenge/). It demonstrates why structured page tools are more dependable and inspectable than simulating clicks: an agent can search real user-approved data, create or update an item through a typed interface, and immediately reflect the result in the same UI.
 
@@ -160,3 +160,4 @@ This is local-first, not encrypted-at-rest. Any script running on the same trust
 ## License
 
 MIT — see [LICENSE](LICENSE).
+

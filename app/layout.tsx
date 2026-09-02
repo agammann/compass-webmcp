@@ -4,7 +4,7 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ??
-      'https://contextdock-control-plane.alx21.chatgpt.site',
+      'https://compass-control-plane.alx21.chatgpt.site',
   ),
   title: 'Compass — Your Personal WebMCP Control Plane',
   description:
@@ -64,3 +64,4 @@ export default function RootLayout({
     </html>
   );
 }
+
