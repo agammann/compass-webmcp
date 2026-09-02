@@ -1,4 +1,4 @@
-import { ContextDockApp } from '@/components/contextdock-app';
+import { CompassApp } from '@/components/compass-app';
 import Link from 'next/link';
 
 const siteUrl = 'https://contextdock-control-plane.alx21.chatgpt.site';
@@ -10,7 +10,7 @@ const structuredData = {
       '@type': 'WebSite',
       '@id': `${siteUrl}/#website`,
       url: siteUrl,
-      name: 'ContextDock',
+      name: 'Compass',
       description:
         'A local-first personal knowledge workspace and WebMCP control plane.',
       inLanguage: 'en',
@@ -18,13 +18,13 @@ const structuredData = {
     {
       '@type': 'SoftwareApplication',
       '@id': `${siteUrl}/#application`,
-      name: 'ContextDock',
+      name: 'Compass',
       url: siteUrl,
       applicationCategory: 'ProductivityApplication',
       operatingSystem: 'Modern web browser',
       isAccessibleForFree: true,
       description:
-        'ContextDock stores notes, tasks, bookmarks, and snippets in the browser. People select a temporary Context Pack and explicit read, write, and item-type permissions before an agent can use ten structured page-side WebMCP tools.',
+        'Compass stores notes, tasks, bookmarks, and snippets in the browser. People select a temporary Context Pack and explicit read, write, and item-type permissions before an agent can use ten structured page-side WebMCP tools.',
       featureList: [
         'Browser-local IndexedDB storage',
         'Human-selected Context Packs',
@@ -34,7 +34,7 @@ const structuredData = {
         'Undo for agent writes',
       ],
       sameAs: [
-        'https://github.com/agammann/contextdock-webmcp',
+        'https://github.com/agammann/compass-webmcp',
         'https://devpost.com/software/contextdock-upim8b',
         'https://youtu.be/DtfjV9JT3Xk',
       ],
@@ -51,9 +51,9 @@ export default function Home() {
           __html: JSON.stringify(structuredData).replace(/</g, '\\u003c'),
         }}
       />
-      <ContextDockApp />
+      <CompassApp />
       <section
-        aria-labelledby="about-contextdock"
+        aria-labelledby="about-compass"
         className="border-t border-white/8 bg-slate-950 px-5 py-12"
       >
         <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[1.4fr_1fr]">
@@ -61,26 +61,26 @@ export default function Home() {
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300">
               Agent-readable product overview
             </p>
-            <h2 id="about-contextdock" className="mt-3 text-2xl font-semibold">
+            <h2 id="about-compass" className="mt-3 text-2xl font-semibold">
               Personal context with a visible, human-controlled boundary
             </h2>
             <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-400">
-              ContextDock is a free, local-first personal knowledge workspace for
+              Compass is a free, local-first personal knowledge workspace for
               people who want useful agent assistance without exposing an entire
               workspace. Notes, tasks, bookmarks, and snippets stay in this
               browser. A person chooses a temporary Context Pack, enables the
               exact permissions they want, and can inspect or undo agent writes.
             </p>
             <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-400">
-              In a WebMCP-capable browser, ContextDock registers ten structured
+              In a WebMCP-capable browser, Compass registers ten structured
               page tools. Those tools call the same repository operations as the
               visible interface, so searches, task changes, activity entries, and
               undo state remain synchronized with what the person sees.
             </p>
           </div>
-          <nav aria-label="ContextDock resources" className="grid content-start gap-2 text-sm">
+          <nav aria-label="Compass resources" className="grid content-start gap-2 text-sm">
             <Link className="rounded-xl border border-white/10 bg-white/[0.025] px-4 py-3 text-cyan-100 hover:bg-white/[0.05]" href="/about">
-              About ContextDock
+              About Compass
             </Link>
             <Link className="rounded-xl border border-white/10 bg-white/[0.025] px-4 py-3 text-cyan-100 hover:bg-white/[0.05]" href="/docs">
               WebMCP and judge documentation
@@ -91,7 +91,7 @@ export default function Home() {
             <Link className="rounded-xl border border-white/10 bg-white/[0.025] px-4 py-3 text-cyan-100 hover:bg-white/[0.05]" href="/llms.txt">
               Agent-readable index
             </Link>
-            <a className="rounded-xl border border-white/10 bg-white/[0.025] px-4 py-3 text-cyan-100 hover:bg-white/[0.05]" href="https://github.com/agammann/contextdock-webmcp">
+            <a className="rounded-xl border border-white/10 bg-white/[0.025] px-4 py-3 text-cyan-100 hover:bg-white/[0.05]" href="https://github.com/agammann/compass-webmcp">
               Public source on GitHub
             </a>
           </nav>

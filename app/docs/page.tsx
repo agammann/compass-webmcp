@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import { InformationPage } from '@/components/information-page';
 
 export const metadata: Metadata = {
-  title: 'ContextDock WebMCP Documentation',
+  title: 'Compass WebMCP Documentation',
   description:
-    'Judge quick start, WebMCP tool catalog, permission behavior, and verification guidance for ContextDock.',
+    'Judge quick start, WebMCP tool catalog, permission behavior, and verification guidance for Compass.',
   alternates: { canonical: '/docs' },
 };
 
@@ -28,7 +28,7 @@ export default function DocsPage() {
     <InformationPage
       eyebrow="Documentation"
       title="WebMCP tools that share visible application state"
-      intro="ContextDock registers ten typed page-side tools. Every handler validates its input and re-checks the active Context Pack and live permissions before reading or writing IndexedDB."
+      intro="Compass registers ten typed page-side tools. Every handler validates its input and re-checks the active Context Pack and live permissions before reading or writing IndexedDB."
     >
       <section>
         <h2 className="text-xl font-semibold text-slate-100">Judge quick start</h2>
@@ -75,7 +75,7 @@ export default function DocsPage() {
       <section>
         <h2 className="text-xl font-semibold text-slate-100">Source and demo</h2>
         <p className="mt-3">
-          Review the <a className="text-cyan-300 hover:text-cyan-200" href="https://github.com/agammann/contextdock-webmcp">public MIT-licensed source</a> or watch the <a className="text-cyan-300 hover:text-cyan-200" href="https://youtu.be/DtfjV9JT3Xk">narrated demo</a>.
+          Review the <a className="text-cyan-300 hover:text-cyan-200" href="https://github.com/agammann/compass-webmcp">public MIT-licensed source</a> or watch the <a className="text-cyan-300 hover:text-cyan-200" href="https://youtu.be/DtfjV9JT3Xk">narrated demo</a>.
         </p>
       </section>
     </InformationPage>

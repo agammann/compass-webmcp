@@ -1,13 +1,13 @@
 ---
-title: ContextDock
+title: Compass
 description: Local-first personal knowledge workspace and WebMCP control plane
 canonical: https://contextdock-control-plane.alx21.chatgpt.site/
 last-updated: 2026-09-02
 ---
 
-# ContextDock
+# Compass
 
-ContextDock is a free, local-first personal knowledge workspace and WebMCP control plane. It is built for people who want an agent to help with notes and tasks without exposing an entire personal workspace.
+Compass is a free, local-first personal knowledge workspace and WebMCP control plane. It is built for people who want an agent to help with notes and tasks without exposing an entire personal workspace.
 
 ## What a person can do
 
@@ -33,4 +33,4 @@ The visible React interface and the WebMCP tools call the same repository functi
 
 Open the [home page](https://contextdock-control-plane.alx21.chatgpt.site/) in a WebMCP-capable browser, load the fictional Atlas demo workspace, and ask the agent to search for unresolved launch blockers. Then ask it to create a high-priority task. The new task and activity entry should appear in the interface. Disable write access and confirm write tools disappear.
 
-See [WebMCP documentation](https://contextdock-control-plane.alx21.chatgpt.site/docs), [privacy details](https://contextdock-control-plane.alx21.chatgpt.site/privacy), and the [public source repository](https://github.com/agammann/contextdock-webmcp).
+See [WebMCP documentation](https://contextdock-control-plane.alx21.chatgpt.site/docs), [privacy details](https://contextdock-control-plane.alx21.chatgpt.site/privacy), and the [public source repository](https://github.com/agammann/compass-webmcp).

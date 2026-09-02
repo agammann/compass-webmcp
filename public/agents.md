@@ -1,13 +1,13 @@
 ---
-title: ContextDock agent guide
-description: How agents and evaluators should understand and use ContextDock
+title: Compass agent guide
+description: How agents and evaluators should understand and use Compass
 canonical: https://contextdock-control-plane.alx21.chatgpt.site/agents.md
 last-updated: 2026-09-02
 ---
 
-# ContextDock agent guide
+# Compass agent guide
 
-ContextDock is a browser-local personal knowledge workspace with page-side WebMCP tools. Its purpose is to let a person expose a temporary, explicit subset of personal context to an agent.
+Compass is a browser-local personal knowledge workspace with page-side WebMCP tools. Its purpose is to let a person expose a temporary, explicit subset of personal context to an agent.
 
 ## Before using a tool
 
@@ -43,4 +43,4 @@ Tools return concise objects with `ok: false`, a stable error code, and a human-
 - Product: https://contextdock-control-plane.alx21.chatgpt.site/
 - Documentation: https://contextdock-control-plane.alx21.chatgpt.site/docs
 - Privacy: https://contextdock-control-plane.alx21.chatgpt.site/privacy
-- Source: https://github.com/agammann/contextdock-webmcp
+- Source: https://github.com/agammann/compass-webmcp

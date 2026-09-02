@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import { InformationPage } from '@/components/information-page';
 
 export const metadata: Metadata = {
-  title: 'ContextDock Privacy and Data Handling',
+  title: 'Compass Privacy and Data Handling',
   description:
-    'How ContextDock stores browser-local data and constrains what page-side WebMCP tools can access.',
+    'How Compass stores browser-local data and constrains what page-side WebMCP tools can access.',
   alternates: { canonical: '/privacy' },
 };
 
@@ -13,7 +13,7 @@ export default function PrivacyPage() {
     <InformationPage
       eyebrow="Privacy"
       title="Browser-local by design"
-      intro="ContextDock does not send workspace content to a ContextDock server. Notes, tasks, bookmarks, snippets, permissions, packs, activity, and undo records stay in IndexedDB for the current browser origin."
+      intro="Compass does not send workspace content to a Compass server. Notes, tasks, bookmarks, snippets, permissions, packs, activity, and undo records stay in IndexedDB for the current browser origin."
     >
       <section>
         <h2 className="text-xl font-semibold text-slate-100">Data storage</h2>

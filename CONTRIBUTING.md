@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping improve ContextDock.
+Thanks for helping improve Compass.
 
 ## Development
 

@@ -2,7 +2,7 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
-const projectRoot = process.env.CONTEXTDOCK_PROJECT_ROOT ?? process.cwd();
+const projectRoot = process.env.COMPASS_PROJECT_ROOT ?? process.cwd();
 const modulePath = (...segments: string[]) => pathToFileURL(resolve(projectRoot, ...segments)).href;
 
 export default defineConfig({

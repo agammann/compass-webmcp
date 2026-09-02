@@ -16,7 +16,7 @@ export function InformationPage({
     <main className="min-h-screen bg-background px-5 py-10 text-foreground sm:py-16">
       <article className="mx-auto max-w-3xl">
         <Link className="text-sm font-medium text-cyan-300 hover:text-cyan-200" href="/">
-          ← Back to ContextDock
+          ← Back to Compass
         </Link>
         <p className="mt-10 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300">
           {eyebrow}
@@ -25,7 +25,7 @@ export function InformationPage({
           {title}
         </h1>
         <p className="mt-5 text-base leading-8 text-slate-300">{intro}</p>
-        <div className="prose-contextdock mt-10 space-y-8 text-sm leading-7 text-slate-400">
+        <div className="prose-compass mt-10 space-y-8 text-sm leading-7 text-slate-400">
           {children}
         </div>
       </article>

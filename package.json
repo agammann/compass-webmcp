@@ -1,5 +1,5 @@
 {
-  "name": "contextdock",
+  "name": "compass",
   "version": "1.0.0",
   "description": "A local-first personal WebMCP control plane for scoped, inspectable agent context.",
   "private": true,

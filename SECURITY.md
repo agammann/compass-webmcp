@@ -2,7 +2,7 @@
 
 ## Scope
 
-ContextDock is a browser-local demonstration application. Security reports should focus on the application code, data validation, permission enforcement, WebMCP tool behavior, import/export handling, and deployment configuration in this repository.
+Compass is a browser-local demonstration application. Security reports should focus on the application code, data validation, permission enforcement, WebMCP tool behavior, import/export handling, and deployment configuration in this repository.
 
 ## Security properties
 
@@ -34,13 +34,13 @@ The project is intended to preserve these properties:
 
 - IndexedDB is not encrypted at rest. Anyone with access to the browser profile can inspect the data.
 - Same-origin application code, a compromised dependency, or a sufficiently privileged browser extension could read the database.
-- ContextDock has no user identity or server-side authorization boundary; its controls are an origin-local capability boundary for a trusted browser profile.
+- Compass has no user identity or server-side authorization boundary; its controls are an origin-local capability boundary for a trusted browser profile.
 - WebMCP is evolving. Browser support and API shape may change, and unsupported browsers simply run the human UI without registered tools.
 - An agent may summarize untrusted personal content inaccurately. The `untrustedContentHint` annotation helps signal this risk but cannot make content trustworthy.
 - Undo is deliberately bounded to recorded recent mutations and is not a general history or backup system.
 - `public/_headers` is honored only by compatible hosts. Apply equivalent headers in the production platform if it is ignored.
 
-Do not use ContextDock as a password manager, secret vault, medical record system, or sole backup for important data.
+Do not use Compass as a password manager, secret vault, medical record system, or sole backup for important data.
 
 ## Reporting
 

@@ -1,18 +1,18 @@
-# ContextDock
+# Compass
 
 > Your personal context. Your rules. Your agent.
 
-![ContextDock social preview](public/contextdock-social-preview.png)
+![Compass social preview](public/compass-social-preview.png)
 
-ContextDock is a local-first personal knowledge workspace and WebMCP control plane. It stores notes, tasks, bookmarks, and snippets in the browser, lets the user assemble temporary Context Packs, and exposes only the tools and records allowed by the active pack and permission switches.
+Compass is a local-first personal knowledge workspace and WebMCP control plane. It stores notes, tasks, bookmarks, and snippets in the browser, lets the user assemble temporary Context Packs, and exposes only the tools and records allowed by the active pack and permission switches.
 
 **Live demo:** https://contextdock-control-plane.alx21.chatgpt.site
 
 The project is designed for the [WebMCP Challenge](https://openai.com/webmcp-challenge/). It demonstrates why structured page tools are more dependable and inspectable than simulating clicks: an agent can search real user-approved data, create or update an item through a typed interface, and immediately reflect the result in the same UI.
 
-## Why ContextDock
+## Why Compass
 
-Personal agents need useful context, but giving an agent an entire personal workspace is too broad. ContextDock makes the boundary explicit:
+Personal agents need useful context, but giving an agent an entire personal workspace is too broad. Compass makes the boundary explicit:
 
 - **Spaces** organize durable information.
 - **Context Packs** define the temporary subset an agent can access.
@@ -37,7 +37,7 @@ Personal agents need useful context, but giving an agent an entire personal work
 
    > Search my current context for unresolved launch blockers. Summarize them, then create one high-priority task for the most urgent blocker.
 
-6. Watch the new task appear in ContextDock and in Agent Activity.
+6. Watch the new task appear in Compass and in Agent Activity.
 7. Turn **Allow write** off and ask:
 
    > Create a task called Publish final release.
@@ -63,7 +63,7 @@ The in-app **Try the WebMCP demo** dialog contains these prompts and a short acc
 
 ## WebMCP tools
 
-ContextDock registers tools with `document.modelContext.registerTool()` and an `AbortController`. Registration is rebuilt when permissions change, so disabled tools disappear immediately. Every handler independently repeats the permission and Context Pack checks.
+Compass registers tools with `document.modelContext.registerTool()` and an `AbortController`. Registration is rebuilt when permissions change, so disabled tools disappear immediately. Every handler independently repeats the permission and Context Pack checks.
 
 | Tool | Mode | Purpose |
 | --- | --- | --- |
@@ -84,7 +84,7 @@ Registration feature-detects `document.modelContext` and waits briefly for brows
 
 ## Agent discovery
 
-ContextDock remains a page-side WebMCP application rather than pretending to be a remote MCP or REST service. It also publishes crawlable product and trust information so agents can identify the site before JavaScript runs:
+Compass remains a page-side WebMCP application rather than pretending to be a remote MCP or REST service. It also publishes crawlable product and trust information so agents can identify the site before JavaScript runs:
 
 - `sitemap.xml` and an agent-welcoming `robots.txt`
 - `llms.txt`, `index.md`, and `agents.md`
@@ -141,13 +141,13 @@ This is local-first, not encrypted-at-rest. Any script running on the same trust
 
 ## Repository guide
 
-- `components/contextdock-app.tsx` — complete user experience and live workspace state
+- `components/compass-app.tsx` — complete user experience and live workspace state
 - `lib/repository.ts` — IndexedDB schema, validation, audit, undo, import/export
 - `lib/webmcp.ts` — tool definitions, registration lifecycle, schemas, and handler gates
 - `lib/permissions.ts` — Pack and permission enforcement
 - `lib/search.ts` — deterministic ranking
 - `lib/seed.ts` — fictional Project Atlas demo
-- `tests/contextdock.test.ts` — permission, validation, undo, registration, and WebMCP integration tests
+- `tests/compass.test.ts` — permission, validation, undo, registration, and WebMCP integration tests
 - `DEVPOST_SUBMISSION.md` — submission-ready copy
 - `VIDEO_SCRIPT.md` — roughly 2 minute 20 second demo script
 

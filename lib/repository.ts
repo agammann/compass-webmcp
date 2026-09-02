@@ -5,7 +5,9 @@ import { DEFAULT_PERMISSIONS, ITEM_TYPES, type ActivityEntry, type AppSettings, 
 import { itemIsInPack } from './permissions.ts';
 import { rankItems, type SearchFilters } from './search.ts';
 
-export const CHANGE_EVENT = 'contextdock:change';
+export const CHANGE_EVENT = 'compass:change';
+// Keep the original IndexedDB name so existing same-origin workspaces survive the product rename.
+const DATABASE_NAME = 'contextdock-v1';
 const IMPORT_LIMIT = 2 * 1024 * 1024;
 const urlSchema = z.string().url().max(2048).refine((value) => ['https:', 'http:'].includes(new URL(value).protocol), 'Only HTTP(S) URLs are allowed');
 const short = z.string().trim().min(1).max(160);
@@ -41,7 +43,7 @@ const settingsSchema = z.object({
 }).strict();
 export const importBundleSchema = z.object({ version: z.literal(1), exportedAt: z.string(), spaces: z.array(spaceSchema).max(200), items: z.array(persistedItemSchema).max(5000), packs: z.array(packSchema).max(200), relations: z.array(relationSchema).max(5000), settings: settingsSchema }).strict();
 
-class ContextDockDatabase extends Dexie {
+class CompassDatabase extends Dexie {
   spaces!: EntityTable<Space, 'id'>;
   items!: EntityTable<PersonalItem, 'id'>;
   packs!: EntityTable<ContextPack, 'id'>;
@@ -51,7 +53,7 @@ class ContextDockDatabase extends Dexie {
   undo!: EntityTable<UndoRecord, 'id'>;
 
   constructor() {
-    super('contextdock-v1');
+    super(DATABASE_NAME);
     this.version(1).stores({
       spaces: 'id, name, updatedAt', items: 'id, spaceId, type, updatedAt, completed, *tags', packs: 'id, active, updatedAt',
       settings: 'id', activity: 'id, timestamp, actor, status, itemId', relations: 'id, sourceId, targetId', undo: 'id, activityId, consumed',
@@ -59,7 +61,7 @@ class ContextDockDatabase extends Dexie {
   }
 }
 
-export const db = new ContextDockDatabase();
+export const db = new CompassDatabase();
 const uid = (prefix: string) => `${prefix}-${crypto.randomUUID()}`;
 const iso = () => new Date().toISOString();
 export const notifyChange = () => {
@@ -130,7 +132,7 @@ async function recordWrite(kind: UndoRecord['kind'], activityBase: Omit<Activity
 
 export async function createItem(input: unknown, actor: 'human' | 'agent' = 'human', tool = 'human_create_item') {
   const parsed = itemInputSchema.parse(input); if (!(await db.spaces.get(parsed.spaceId))) throw new Error('Space not found');
-  const timestamp = iso(); const item: PersonalItem = { id: uid('item'), ...parsed, createdAt: timestamp, updatedAt: timestamp, source: actor === 'agent' ? 'WebMCP' : 'ContextDock UI', createdBy: actor };
+  const timestamp = iso(); const item: PersonalItem = { id: uid('item'), ...parsed, createdAt: timestamp, updatedAt: timestamp, source: actor === 'agent' ? 'WebMCP' : 'Compass UI', createdBy: actor };
   await db.transaction('rw', db.items, db.activity, db.undo, async () => { await db.items.put(item); await recordWrite('create', { actor, tool, operation: 'created item', itemId: item.id, itemTitle: item.title, result: `Created ${item.type} “${item.title}”`, status: 'success' }, { itemId: item.id }); }); notifyChange(); return item;
 }
 

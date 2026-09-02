@@ -7,10 +7,10 @@ import {
   completeTask, db, getSnapshot, importWorkspace, itemInputSchema, loadDemoWorkspace,
   undoActivity, updateSettings,
 } from '@/lib/repository';
-import { registerContextDockTools, unregisterContextDockTools } from '@/lib/webmcp';
+import { registerCompassTools, unregisterCompassTools } from '@/lib/webmcp';
 
 beforeEach(async () => {
-  unregisterContextDockTools();
+  unregisterCompassTools();
   db.close();
   await db.delete();
   await db.open();
@@ -67,7 +67,7 @@ describe('writes, task completion, and undo', () => {
 describe('WebMCP registration lifecycle and integration', () => {
   it('waits briefly for a browser that injects Model Context after hydration', async () => {
     const registrations: string[] = [];
-    const pending = registerContextDockTools(demoSettings, {
+    const pending = registerCompassTools(demoSettings, {
       contextTimeoutMs: 100,
       pollIntervalMs: 10,
     });
@@ -87,11 +87,11 @@ describe('WebMCP registration lifecycle and integration', () => {
   it('aborts old registrations and changes exposed write tools', async () => {
     const registrations: Array<{ tool: { name: string; execute: (args: unknown) => Promise<unknown> }; signal?: AbortSignal }> = [];
     (globalThis as { document?: unknown }).document = { modelContext: { registerTool: (tool: { name: string; execute: (args: unknown) => Promise<unknown> }, options?: { signal?: AbortSignal }) => { registrations.push({ tool, signal: options?.signal }); } } };
-    const first = await registerContextDockTools(demoSettings);
+    const first = await registerCompassTools(demoSettings);
     expect(first.registered).toContain('create_personal_item');
     const firstSignal = registrations[0]?.signal;
     const restricted = { ...demoSettings, permissions: { ...demoSettings.permissions, writeEnabled: false } };
-    const second = await registerContextDockTools(restricted);
+    const second = await registerCompassTools(restricted);
     expect(firstSignal?.aborted).toBe(true);
     expect(second.registered).not.toContain('create_personal_item');
     expect(second.registered).toContain('search_personal_context');
@@ -101,7 +101,7 @@ describe('WebMCP registration lifecycle and integration', () => {
     await loadDemoWorkspace();
     const tools = new Map<string, { execute: (args: unknown) => Promise<Record<string, unknown>> }>();
     (globalThis as { document?: unknown }).document = { modelContext: { registerTool: (tool: { name: string; execute: (args: unknown) => Promise<Record<string, unknown>> }) => { tools.set(tool.name, tool); } } };
-    await registerContextDockTools(demoSettings);
+    await registerCompassTools(demoSettings);
     const search = await tools.get('search_personal_context')!.execute({ query: 'launch blockers', limit: 5 });
     expect(search.ok).toBe(true);
     const before = (await getSnapshot()).items.length;

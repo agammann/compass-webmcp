@@ -142,7 +142,7 @@ export function exposedToolInfo(settings?: AppSettings) {
     .filter(([name, mode]) => name === 'get_active_context' || (mode === 'read' ? settings.permissions.readEnabled : settings.permissions.writeEnabled));
 }
 
-export async function registerContextDockTools(
+export async function registerCompassTools(
   settings: AppSettings,
   options: { contextTimeoutMs?: number; pollIntervalMs?: number } = {},
 ) {
@@ -165,7 +165,7 @@ export async function registerContextDockTools(
   return { supported: true, registered };
 }
 
-export function unregisterContextDockTools() { activeController?.abort(); activeController = undefined; }
+export function unregisterCompassTools() { activeController?.abort(); activeController = undefined; }
 
 export function isItemVisible(item: PersonalItem, settings: AppSettings, pack: ContextPack) {
   return itemIsInPack(item, pack) && settings.permissions.allowedTypes[item.type];

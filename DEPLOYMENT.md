@@ -1,6 +1,6 @@
 # Deployment
 
-ContextDock is a client-first Vinext application prepared for Cloudflare Workers and OpenAI Sites. The browser database is origin-scoped, so changing the production origin creates a separate empty workspace unless the user exports and imports a backup.
+Compass is a client-first Vinext application prepared for Cloudflare Workers and OpenAI Sites. The browser database is origin-scoped, so changing the production origin creates a separate empty workspace unless the user exports and imports a backup.
 
 ## Production build
 
@@ -34,7 +34,7 @@ The CSP currently permits inline scripts and styles for Vinext compatibility. Ti
 - Denied operations are logged and Undo restores a write
 - Mobile layout and keyboard focus are usable
 - Social image and metadata resolve at the production origin
-- Raw HTML identifies ContextDock without JavaScript and includes canonical and JSON-LD metadata
+- Raw HTML identifies Compass without JavaScript and includes canonical and JSON-LD metadata
 - `sitemap.xml`, `llms.txt`, `agents.md`, `index.md`, and both ARD catalog paths resolve with their intended content
 - No secrets, real personal data, source maps containing secrets, or machine-specific paths are shipped
 - Deployment URL is copied into the README and submission only after verification

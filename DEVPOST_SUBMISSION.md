@@ -2,7 +2,7 @@
 
 ## Project name
 
-ContextDock
+Compass
 
 ## Tagline
 
@@ -10,19 +10,19 @@ Your personal context. Your rules. Your agent.
 
 ## Short description
 
-ContextDock is a local-first personal knowledge workspace and WebMCP control plane. Users organize notes, tasks, bookmarks, and snippets into Spaces, assemble a temporary Context Pack, and explicitly choose which read and write capabilities an agent may use. Typed WebMCP tools operate on the same IndexedDB-backed repository as the human UI, so every allowed change appears live, every denied or successful agent action is auditable, and recent writes can be undone.
+Compass is a local-first personal knowledge workspace and WebMCP control plane. Users organize notes, tasks, bookmarks, and snippets into Spaces, assemble a temporary Context Pack, and explicitly choose which read and write capabilities an agent may use. Typed WebMCP tools operate on the same IndexedDB-backed repository as the human UI, so every allowed change appears live, every denied or successful agent action is auditable, and recent writes can be undone.
 
 ## Inspiration
 
 Personal agents become far more useful when they understand our current projects, open tasks, references, and decisions. But the obvious shortcut—handing an agent an entire personal workspace—creates an uncomfortable privacy and control tradeoff. We wanted a product where the user can see and change the boundary, not merely trust a broad authorization screen.
 
-ContextDock turns that boundary into a first-class object: a Context Pack. It is a temporary, understandable bundle of Spaces and selected items, further constrained by item type and live read/write switches.
+Compass turns that boundary into a first-class object: a Context Pack. It is a temporary, understandable bundle of Spaces and selected items, further constrained by item type and live read/write switches.
 
 ## What it does
 
-ContextDock stores notes, tasks, bookmarks, and snippets locally in IndexedDB. Users can create Spaces, build Context Packs, search deterministically, link related items, complete tasks, and import or export a validated JSON backup.
+Compass stores notes, tasks, bookmarks, and snippets locally in IndexedDB. Users can create Spaces, build Context Packs, search deterministically, link related items, complete tasks, and import or export a validated JSON backup.
 
-When WebMCP is available, ContextDock registers ten typed tools for reading the active context, listing Spaces, searching and retrieving items, reviewing recent activity, creating and updating items, completing tasks, linking records, and creating a new inactive Pack. Permission changes rebuild the registry immediately. Every handler repeats the permission and Pack checks, and agent writes appear live in the UI with readable audit entries and Undo.
+When WebMCP is available, Compass registers ten typed tools for reading the active context, listing Spaces, searching and retrieving items, reviewing recent activity, creating and updating items, completing tasks, linking records, and creating a new inactive Pack. Permission changes rebuild the registry immediately. Every handler repeats the permission and Pack checks, and agent writes appear live in the UI with readable audit entries and Undo.
 
 The included fictional Project Atlas workspace gives judges a safe, useful flow immediately: ask the agent to find launch blockers, create a high-priority task for the most urgent one, disable writes, confirm the write surface disappears, then undo an agent change.
 
@@ -42,7 +42,7 @@ The hardest part was making permissions a real runtime boundary rather than deco
 
 Undo also required careful design. We record the exact before-state inside the same repository layer used by agent writes, then associate the audit event with a bounded undo record. That keeps the feature explainable and avoids pretending the app has unlimited version history.
 
-Finally, strict import validation needed more than parsing JSON. ContextDock checks size, schema version, unexpected properties, safe URLs, unique identifiers, and references between Spaces, items, Packs, relations, settings, activity, and undo records before any replacement occurs.
+Finally, strict import validation needed more than parsing JSON. Compass checks size, schema version, unexpected properties, safe URLs, unique identifiers, and references between Spaces, items, Packs, relations, settings, activity, and undo records before any replacement occurs.
 
 ## Accomplishments that we're proud of
 
@@ -59,7 +59,7 @@ WebMCP is most compelling when the website exposes meaningful domain operations 
 
 We also learned that tool metadata is part of the safety design. Concise descriptions, read-only hints, untrusted-content hints, closed schemas, and small structured responses give the client and model better information for deciding how to use a tool.
 
-## What's next for ContextDock
+## What's next for Compass
 
 - Optional end-to-end encrypted sync between a user's devices
 - Pack expiration, scheduled deactivation, and per-tool rate limits
@@ -72,8 +72,8 @@ We also learned that tool metadata is part of the safety design. Concise descrip
 
 TypeScript, React, Vite, Vinext, IndexedDB, Dexie, Zod, Vitest, WebMCP, Cloudflare Workers, OpenAI Sites
 
-## Links to add after verified publication
+## Published links
 
 - Live app: https://contextdock-control-plane.alx21.chatgpt.site
-- Public repository: `[VERIFIED REPOSITORY URL]`
-- Demo video: `[VERIFIED VIDEO URL]`
+- Public repository: https://github.com/agammann/compass-webmcp
+- Demo video: https://youtu.be/DtfjV9JT3Xk
