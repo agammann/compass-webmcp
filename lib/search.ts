@@ -43,5 +43,5 @@ export function rankItems(items: PersonalItem[], spaces: Space[], filters: Searc
     .map((item) => ({ item, score: scoreItem(item, spaceNames.get(item.spaceId) ?? '', filters.query) }))
     .filter(({ score }) => !filters.query.trim() || score > 0)
     .sort((a, b) => b.score - a.score || b.item.updatedAt.localeCompare(a.item.updatedAt))
-    .slice(0, Math.min(Math.max(filters.limit ?? 12, 1), 50));
+    .slice(0, Math.min(Math.max(filters.limit ?? 12, 1), 5000));
 }

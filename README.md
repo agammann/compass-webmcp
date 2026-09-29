@@ -1,165 +1,90 @@
 # Compass
 
-> Your personal context. Your rules. Your agent.
+[Open Compass](https://compass-control-plane.alx21.chatgpt.site/) · [User guide](https://compass-control-plane.alx21.chatgpt.site/docs) · [Agent guide](https://compass-control-plane.alx21.chatgpt.site/agents.md)
 
-![Compass social preview](public/compass-social-preview.png)
+Keep notes, tasks, bookmarks and code snippets in your browser. Choose exactly which Spaces or individual items an agent can use through a Context Pack. Compass works manually in a normal browser; a browser with page-side WebMCP support can also search and change the same saved workspace through ten tools.
 
-Compass is a local-first personal knowledge workspace and WebMCP control plane. It stores notes, tasks, bookmarks, and snippets in the browser, lets the user assemble temporary Context Packs, and exposes only the tools and records allowed by the active pack and permission switches.
+![Compass desktop workspace](docs/compass-desktop.png)
 
-**Live app:** https://compass-control-plane.alx21.chatgpt.site
+## Start using it
 
-**Narrated demo:** https://youtu.be/s5Jl8F18l5I
+1. Open the site. A fresh browser starts with 21 clearly labeled fictional Project Atlas items so you can explore the workflow immediately.
+2. To use your own content, open **Settings → Clear data** and confirm. This starts an empty workspace with WebMCP off. Existing users keep their saved data when the application updates.
+3. Open **Spaces → Create Space**, then **Add item**. Choose note, task, bookmark or snippet. Items can be edited, linked by name, and tasks completed or reopened.
+4. Open **Context Packs → Create Pack**. Select entire Spaces or individual items, choose allowed types, save, and explicitly **Activate** the Pack.
+5. In **Agent Access**, enable WebMCP and choose read, write and type permissions. Ask your browser agent to work on the active Pack. Review the results and **Activity**.
+6. Use **Settings → Export workspace** regularly. Data lives in this browser and site origin; clearing browser storage removes it. There is no account or cloud sync.
 
-The project is designed for the [WebMCP Challenge](https://openai.com/webmcp-challenge/). It demonstrates why structured page tools are more dependable and inspectable than simulating clicks: an agent can search real user-approved data, create or update an item through a typed interface, and immediately reflect the result in the same UI.
+On phones, the navigation button opens Dashboard, Spaces, Context Packs, Activity and Settings. Agent Access appears below the workspace.
 
-## Why Compass
+## A useful agent request
 
-Personal agents need useful context, but giving an agent an entire personal workspace is too broad. Compass makes the boundary explicit:
+> Search my active Context Pack for unresolved launch blockers. Summarize the evidence, then create one high-priority task for the most important next step. Tell me exactly what you changed.
 
-- **Spaces** organize durable information.
-- **Context Packs** define the temporary subset an agent can access.
-- **Permission switches** gate WebMCP, read operations, write operations, and item types.
-- **Agent Activity** records successful and denied operations.
-- **Undo** reverses recent agent writes.
-- **IndexedDB** keeps the workspace browser-local; no account or API key is required.
-
-## Judge quick start
-
-1. Install and run the app:
-
-   ```bash
-   pnpm install
-   pnpm dev
-   ```
-
-2. Open `http://localhost:3000` in a browser with WebMCP support, or use the live demo above.
-3. A clean browser automatically opens the clearly labeled fictional **Atlas Launch** demo so page-side tools are discoverable immediately.
-4. Confirm WebMCP, Read, and Write are enabled.
-5. Ask the agent:
-
-   > Search my current context for unresolved launch blockers. Summarize them, then create one high-priority task for the most urgent blocker.
-
-6. Watch the new task appear in Compass and in Agent Activity.
-7. Turn **Allow write** off and ask:
-
-   > Create a task called Publish final release.
-
-   The write tools are unregistered immediately. Any in-flight or stale invocation is also rejected by the runtime permission checks and logged as denied.
-8. Re-enable writes, create a task, and use **Undo** in Agent Activity.
-
-The in-app **Try the WebMCP demo** dialog contains these prompts and a short accessibility follow-up.
-
-## Product features
-
-- Four item types: notes, tasks, bookmarks, and snippets
-- Create and rename Spaces; create and activate Context Packs
-- Pack scoping by whole Space or selected items, further restricted by item type
-- Deterministic search ranking: exact title, tag, title token, then body/URL/Space matches
-- Item create, edit, complete/reopen, and relation linking
-- Human-readable agent audit trail with denial entries and reversible writes
-- Versioned JSON export/import with strict validation and a 2 MB import limit
-- Immediate fictional demo initialization on a clean origin, with empty/reset controls in Settings
-- Responsive dashboard and permission panel
-- Keyboard-visible focus, semantic labels, reduced-motion support, and readable empty/error states
-- No authentication, cloud database, analytics, API key, or hidden remote dependency
+The fictional sample has relevant notes and tasks. For your own workspace, replace the subject with something in your content. Search uses deterministic text matching, not embeddings or an external model service. Compass itself does not run an assistant or require an API key; the browser agent supplies its own model and may send tool results to its provider.
 
 ## WebMCP tools
 
-Compass registers tools with `document.modelContext.registerTool()` and an `AbortController`. Registration is rebuilt when permissions change, so disabled tools disappear immediately. Every handler independently repeats the permission and Context Pack checks.
+| Tool | Behavior |
+| --- | --- |
+| `get_active_context` | Report active Pack metadata, permitted types, counts and access settings. Available when WebMCP is enabled, even with read off. |
+| `list_spaces` | List Spaces represented in the active scope, optionally with counts. |
+| `search_personal_context` | Rank matching permitted items; optionally filter types, tags and Space. |
+| `get_personal_item` | Retrieve one permitted item. |
+| `list_recent_activity` | Return activity tied to items visible in the active scope. |
+| `create_personal_item` | Create an allowed item in a Space wholly included in the Pack. |
+| `update_personal_item` | Edit safe fields of an existing permitted item. |
+| `complete_task` | Complete or reopen a permitted task. |
+| `link_personal_items` | Relate two permitted items. |
+| `create_context_pack` | Create an inactive Pack within the current scope; activation remains manual. |
 
-| Tool | Mode | Purpose |
-| --- | --- | --- |
-| `get_active_context` | Read | Return the active Pack, permissions, and accessible count |
-| `list_spaces` | Read | List accessible Spaces and item counts |
-| `search_personal_context` | Read | Deterministically search scoped items |
-| `get_personal_item` | Read | Retrieve one scoped item by ID |
-| `list_recent_activity` | Read | Return recent readable audit entries |
-| `create_personal_item` | Write | Create a validated item inside an allowed Space/type |
-| `update_personal_item` | Write | Update a scoped item with field allowlisting |
-| `complete_task` | Write | Complete or reopen a scoped task |
-| `link_personal_items` | Write | Create a typed relation between two scoped items |
-| `create_context_pack` | Write | Create, but never auto-activate, a new Pack |
+Tools register through `document.modelContext`, with `navigator.modelContext` fallback. Compass briefly waits for browsers that inject the API after page load. The interface reports availability; ordinary browsers retain all manual features. This is a page-side integration, with no remote `/mcp` endpoint to add to a desktop MCP client.
 
-Tool inputs use closed JSON Schemas (`additionalProperties: false`) and Zod runtime validation. Responses are concise structured objects with stable error codes. Read tools use `readOnlyHint`; content-bearing results use `untrustedContentHint`; write tools omit the read-only hint and describe their mutation explicitly.
+Every call validates arguments and checks live settings inside the same IndexedDB transaction as its operation. Disabling write removes mutation tools and rejects retained calls. A Pack containing an individual item does not authorize its entire Space. Content is treated as data; snippets are never executed. Scope checks constrain Compass tools, not every action a browser agent could perform with separate browser permissions.
 
-Registration feature-detects `document.modelContext` and waits briefly for browsers that inject the Model Context API during page startup. Permission changes abort the prior registration lifecycle before registering the newly allowed tool set.
+## Undo, persistence and backups
 
-## Agent discovery
+- New agent item writes, links and Pack creation have a local activity entry and Undo action. Undo will refuse to overwrite later edits, remove referenced items, or remove an activated/changed Pack. Older actions without a safe snapshot must be edited manually.
+- Same-origin tabs observe committed database changes. An editor opened before another change refuses a stale save; reopen the item to use current content.
+- Export includes Spaces, items, Packs, relations and settings. Activity and undo history are local and are not included in backups.
+- Import accepts version 1 Compass JSON up to 20 MB, validates IDs and cross-references before replacement, and requires confirmation. Invalid files leave the existing workspace intact. Imported WebMCP access stays off until you re-enable it.
+- Resetting the sample and clearing data require confirmation. Export first. Local storage is not encrypted, and browser eviction or private-mode cleanup can remove it.
 
-Compass remains a page-side WebMCP application rather than pretending to be a remote MCP or REST service. It also publishes crawlable product and trust information so agents can identify the site before JavaScript runs:
+## Run locally
 
-- `sitemap.xml` and an agent-welcoming `robots.txt`
-- `llms.txt`, `index.md`, and `agents.md`
-- `/.well-known/ard.json` with the legacy `ai-catalog.json` alias
-- Canonical metadata, JSON-LD, and a markdown alternate link
-- Crawlable `/about`, `/docs`, `/privacy`, `/pricing`, and `/contact` pages with markdown twins
-- An honest `/auth.md` explanation of browser-local authorization and the absence of accounts or OAuth
+Use Node.js 24 and pnpm 11.19.0.
 
-These resources document the existing application and its real tool surface; they do not introduce a remote API, account system, or payment flow.
-
-## Architecture
-
-```text
-React UI
-  ├─ live permission controls ──┐
-  ├─ Spaces / Packs / Activity │
-  └─ item workflows            │
-                               ▼
-WebMCP registry ── strict handler gates ── repository functions
-                                                │
-                                                ▼
-                                  IndexedDB via Dexie
-                                  items / spaces / packs
-                                  settings / activity
-                                  relations / undo
-```
-
-The UI and WebMCP tools call the same repository functions. That keeps validation, audit behavior, live refresh, and undo consistent regardless of whether a human or agent initiates an operation.
-
-## Local development
-
-Requirements: Node.js 22.13 or newer and pnpm.
-
-```bash
-pnpm install
+```sh
+pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Quality checks:
+Open the URL printed by the development server. Production preview:
 
-```bash
-pnpm typecheck
-pnpm lint
-pnpm test
+```sh
 pnpm build
+pnpm start --port 3016
 ```
 
-`pnpm build` produces the deployable Vinext/Cloudflare output. See [DEPLOYMENT.md](DEPLOYMENT.md) for hosting and security-header notes.
+## Verify changes
 
-## Data model and privacy
+```sh
+pnpm test
+pnpm lint
+pnpm typecheck
+pnpm exec playwright install chromium
+pnpm build
+pnpm test:e2e
+```
 
-All workspace content is stored in IndexedDB under the current origin. Demo data is fictional and marked `Demo data` in the interface. Export produces a versioned JSON document; import validates the complete structure and rejects oversized, malformed, unsupported, or cross-reference-invalid data before replacing the workspace.
+Tests cover repository persistence, import integrity, permission changes, safe undo, manual browser workflows, mobile navigation and a simulated browser WebMCP adapter. Simulated registration does not establish native browser compatibility; release verification also exercises the live site's native tools. GitHub Actions runs the same checks.
 
-This is local-first, not encrypted-at-rest. Any script running on the same trusted origin can access the browser database. Review [SECURITY.md](SECURITY.md) before using real personal information.
+## Project structure
 
-## Repository guide
+- `components/compass-app.tsx`: workspace, editor, Packs, permissions, activity and backup controls.
+- `lib/repository.ts`: Dexie persistence, validation, transactions, import/export and undo.
+- `lib/webmcp.ts`: tool schemas, registration and permission checks.
+- `lib/search.ts`: local text ranking.
+- `tests/`, `e2e/`: unit and browser regression tests.
 
-- `components/compass-app.tsx` — complete user experience and live workspace state
-- `lib/repository.ts` — IndexedDB schema, validation, audit, undo, import/export
-- `lib/webmcp.ts` — tool definitions, registration lifecycle, schemas, and handler gates
-- `lib/permissions.ts` — Pack and permission enforcement
-- `lib/search.ts` — deterministic ranking
-- `lib/seed.ts` — fictional Project Atlas demo
-- `tests/compass.test.ts` — permission, validation, undo, registration, and WebMCP integration tests
-- `DEVPOST_SUBMISSION.md` — submission-ready copy
-- `VIDEO_SCRIPT.md` — roughly 2 minute 20 second demo script
-
-## Standards references
-
-- [WebMCP specification](https://github.com/webmachinelearning/webmcp)
-- [Chrome WebMCP overview](https://developer.chrome.com/docs/ai/webmcp)
-- [Chrome guidance for secure WebMCP tools](https://developer.chrome.com/docs/ai/webmcp/secure-tools)
-
-## License
-
-MIT — see [LICENSE](LICENSE).
+React, TypeScript, Vinext/Vite, Dexie and Tailwind. MIT licensed. See [deployment](DEPLOYMENT.md), [contributing](CONTRIBUTING.md) and [security](SECURITY.md).

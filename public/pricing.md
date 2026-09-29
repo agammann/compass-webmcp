@@ -2,7 +2,7 @@
 title: Compass pricing
 description: Compass is free to use and has no paid plan
 canonical: https://compass-control-plane.alx21.chatgpt.site/pricing
-last-updated: 2026-09-02
+last-updated: 2026-09-29
 ---
 
 # Compass pricing

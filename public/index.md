@@ -2,7 +2,7 @@
 title: Compass
 description: Local-first personal knowledge workspace and WebMCP control plane
 canonical: https://compass-control-plane.alx21.chatgpt.site/
-last-updated: 2026-09-02
+last-updated: 2026-09-29
 ---
 
 # Compass
@@ -29,9 +29,9 @@ Use Compass when the person asks an agent to find, summarize, create, update, co
 
 ## Architecture
 
-The visible React interface and the WebMCP tools call the same repository functions. State is stored in IndexedDB and refreshed through the same application change event, so agent operations are immediately visible. The application has no account, hosted database, analytics script, or remote API dependency.
+The visible React interface and the WebMCP tools call the same repository functions. State is stored in IndexedDB and refreshed through Dexie live queries across same-origin tabs, so agent operations are immediately visible. The application has no account, hosted database, analytics script, or remote API dependency.
 
-## Evaluation
+## Try it
 
 Open the [home page](https://compass-control-plane.alx21.chatgpt.site/) in a WebMCP-capable browser. A clean browser initializes the clearly labeled fictional Atlas demo automatically, making the tools discoverable without a prerequisite click. Ask the agent to search for unresolved launch blockers, then ask it to create a high-priority task. The new task and activity entry should appear in the interface. Disable write access and confirm write tools disappear.
 

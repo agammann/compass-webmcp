@@ -38,7 +38,7 @@
       "displayName": "Compass WebMCP documentation",
       "type": "text/html",
       "url": "https://compass-control-plane.alx21.chatgpt.site/docs",
-      "description": "Crawlable documentation for Compass's WebMCP tool catalog, judge flow, and safety properties.",
+      "description": "Crawlable documentation for Compass's WebMCP tool catalog, user workflow, and safety properties.",
       "tags": ["documentation", "webmcp", "tool-catalog"],
       "representativeQueries": [
         "which WebMCP tools does Compass expose",
@@ -47,4 +47,3 @@
     }
   ]
 }
-

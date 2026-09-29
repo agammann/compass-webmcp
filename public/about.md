@@ -2,7 +2,7 @@
 title: About Compass
 description: Purpose, audience, and operating model for the Compass WebMCP control plane
 canonical: https://compass-control-plane.alx21.chatgpt.site/about
-last-updated: 2026-09-02
+last-updated: 2026-09-29
 ---
 
 # About Compass

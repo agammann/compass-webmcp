@@ -25,7 +25,6 @@ const structuredData = {
       logo: `${siteUrl}/favicon.svg`,
       sameAs: [
         'https://github.com/agammann/compass-webmcp',
-        'https://devpost.com/software/contextdock-upim8b',
       ],
     },
     {
@@ -58,8 +57,6 @@ const structuredData = {
       ],
       sameAs: [
         'https://github.com/agammann/compass-webmcp',
-        'https://devpost.com/software/contextdock-upim8b',
-        'https://youtu.be/s5Jl8F18l5I',
       ],
     },
   ],
@@ -106,7 +103,7 @@ export default function Home() {
               About Compass
             </Link>
             <Link className="rounded-xl border border-white/10 bg-white/[0.025] px-4 py-3 text-cyan-100 hover:bg-white/[0.05]" href="/docs">
-              WebMCP and judge documentation
+              User guide and WebMCP documentation
             </Link>
             <Link className="rounded-xl border border-white/10 bg-white/[0.025] px-4 py-3 text-cyan-100 hover:bg-white/[0.05]" href="/privacy">
               Privacy and data handling

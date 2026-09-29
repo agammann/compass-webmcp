@@ -2,7 +2,7 @@
 title: Compass WebMCP Documentation
 description: Tool catalog, permission model, and production verification flow for Compass.
 canonical: https://compass-control-plane.alx21.chatgpt.site/docs
-last-updated: 2026-09-02
+last-updated: 2026-09-29
 ---
 
 # Compass WebMCP Documentation
@@ -35,3 +35,7 @@ Use Compass when the person asks you to find, summarize, create, update, connect
 The human selects the active Context Pack and controls every permission in the visible interface. Agent writes appear in Agent Activity and supported recent mutations can be undone. Creating a Context Pack never activates it; activation remains a human action.
 
 See the [agent-readable overview](https://compass-control-plane.alx21.chatgpt.site/index.md), [privacy details](https://compass-control-plane.alx21.chatgpt.site/privacy), and [public source](https://github.com/agammann/compass-webmcp).
+
+## Saved data and control
+
+Backups contain content and settings, excluding activity and undo history. Import validates references before replacement, accepts up to 20 MB, and keeps WebMCP off until the person enables it. Reset and import require confirmation. Undo refuses to overwrite newer edits or delete referenced content. Browser storage is not encrypted or synced; export backups regularly. A browser agent may send permitted tool results to its provider.

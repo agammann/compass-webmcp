@@ -81,10 +81,13 @@ export interface Relation {
 export interface UndoRecord {
   id: string;
   activityId: string;
-  kind: 'create' | 'update' | 'complete' | 'link';
+  kind: 'create' | 'update' | 'complete' | 'link' | 'pack';
   itemId?: string;
   relationId?: string;
   before?: PersonalItem;
+  after?: PersonalItem;
+  packId?: string;
+  afterPack?: ContextPack;
   consumed: boolean;
   createdAt: string;
 }
@@ -114,4 +117,3 @@ export const DEFAULT_PERMISSIONS: AgentPermissions = {
   writeEnabled: true,
   allowedTypes: { note: true, task: true, bookmark: true, snippet: true },
 };
-

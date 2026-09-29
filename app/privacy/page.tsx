@@ -22,7 +22,7 @@ export default function PrivacyPage() {
         <h2 className="text-xl font-semibold text-slate-100">Data storage</h2>
         <p className="mt-3">
           The application has no account system, analytics script, cloud database,
-          or hidden API dependency. A person can export a versioned JSON backup or
+          or hidden API dependency. A browser agent may send tool results to its own provider. Browser storage is not synced; keep JSON backups. A person can export a versioned JSON backup or
           clear all local data from Settings. Imports are size-limited and validated
           before they replace the local workspace.
         </p>

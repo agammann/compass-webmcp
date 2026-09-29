@@ -4,7 +4,7 @@ import { InformationPage } from '@/components/information-page';
 export const metadata: Metadata = {
   title: 'Compass WebMCP Documentation',
   description:
-    'Judge quick start, WebMCP tool catalog, permission behavior, and verification guidance for Compass.',
+    'Quick start, WebMCP tool catalog, permission behavior, and verification guidance for Compass.',
   alternates: {
     canonical: '/docs',
     types: { 'text/markdown': '/docs.md' },
@@ -34,32 +34,45 @@ export default function DocsPage() {
       intro="Compass registers ten typed page-side tools. Every handler validates its input and re-checks the active Context Pack and live permissions before reading or writing IndexedDB."
     >
       <section>
-        <h2 className="text-xl font-semibold text-slate-100">Judge quick start</h2>
+        <h2 className="text-xl font-semibold text-slate-100">Quick start</h2>
         <ol className="mt-3 list-decimal space-y-2 pl-5">
           <li>Open the home page in a WebMCP-capable browser.</li>
-          <li>On a clean browser, confirm the fictional Atlas Launch demo initialized automatically.</li>
+          <li>
+            On a clean browser, confirm the fictional Atlas Launch demo
+            initialized automatically.
+          </li>
           <li>Confirm the Atlas Launch Context Pack is active.</li>
           <li>Ask the agent to search for unresolved launch blockers.</li>
-          <li>Ask it to create a high-priority task for the most urgent blocker.</li>
-          <li>Watch the task and agent activity appear in the visible interface.</li>
+          <li>
+            Ask it to create a high-priority task for the most urgent blocker.
+          </li>
+          <li>
+            Watch the task and agent activity appear in the visible interface.
+          </li>
           <li>Disable Allow write and confirm write tools disappear.</li>
         </ol>
       </section>
       <section>
-        <h2 className="text-xl font-semibold text-slate-100">When an agent should use Compass</h2>
+        <h2 className="text-xl font-semibold text-slate-100">
+          When an agent should use Compass
+        </h2>
         <p className="mt-3">
           Use Compass when the person asks an agent to find, summarize, create,
-          update, connect, or complete records inside the currently active Context
-          Pack. Start with <code>get_active_context</code>. Do not use Compass to
-          reach cloud accounts, external APIs, files outside this browser origin,
-          or any item the active pack and permission switches do not expose.
+          update, connect, or complete records inside the currently active
+          Context Pack. Start with <code>get_active_context</code>. Do not use
+          Compass to reach cloud accounts, external APIs, files outside this
+          browser origin, or any item the active pack and permission switches do
+          not expose.
         </p>
       </section>
       <section>
         <h2 className="text-xl font-semibold text-slate-100">Read tools</h2>
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {readTools.map((tool) => (
-            <li key={tool} className="rounded-lg border border-white/10 bg-white/[0.025] px-3 py-2 font-mono text-xs text-cyan-100">
+            <li
+              key={tool}
+              className="rounded-lg border border-white/10 bg-white/[0.025] px-3 py-2 font-mono text-xs text-cyan-100"
+            >
               {tool}
             </li>
           ))}
@@ -69,26 +82,51 @@ export default function DocsPage() {
         <h2 className="text-xl font-semibold text-slate-100">Write tools</h2>
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {writeTools.map((tool) => (
-            <li key={tool} className="rounded-lg border border-white/10 bg-white/[0.025] px-3 py-2 font-mono text-xs text-cyan-100">
+            <li
+              key={tool}
+              className="rounded-lg border border-white/10 bg-white/[0.025] px-3 py-2 font-mono text-xs text-cyan-100"
+            >
               {tool}
             </li>
           ))}
         </ul>
       </section>
       <section>
-        <h2 className="text-xl font-semibold text-slate-100">Safety properties</h2>
+        <h2 className="text-xl font-semibold text-slate-100">
+          Safety properties
+        </h2>
         <p className="mt-3">
-          Tool schemas reject unknown fields. Stored personal content is returned as
-          untrusted data, not instructions. Read and write tools unregister when their
-          visible permission switch is disabled, while every handler repeats the same
-          authorization check to protect against stale or in-flight calls. Creating a
-          Context Pack never activates it; activation remains a human-only action.
+          Tool schemas reject unknown fields. Stored personal content is
+          returned as untrusted data, not instructions. Read and write tools
+          unregister when their visible permission switch is disabled, while
+          every handler repeats the same authorization check to protect against
+          stale or in-flight calls. Creating a Context Pack never activates it;
+          activation remains a human-only action.
         </p>
       </section>
       <section>
-        <h2 className="text-xl font-semibold text-slate-100">Source and demo</h2>
+        <h2 className="text-xl font-semibold text-slate-100">
+          Use your own workspace
+        </h2>
         <p className="mt-3">
-          Review the <a className="text-cyan-300 hover:text-cyan-200" href="https://github.com/agammann/compass-webmcp">public MIT-licensed source</a> or watch the <a className="text-cyan-300 hover:text-cyan-200" href="https://youtu.be/s5Jl8F18l5I">narrated demo</a>.
+          In Settings, export any data you want to keep, then clear the sample.
+          Create a Space and add items. Create and activate a Context Pack, then
+          enable agent access. Imports require confirmation and leave WebMCP
+          off. Undo refuses to overwrite newer edits; backup files exclude
+          activity and undo history.
+        </p>
+      </section>
+      <section>
+        <h2 className="text-xl font-semibold text-slate-100">Source</h2>
+        <p className="mt-3">
+          Review the{' '}
+          <a
+            className="text-cyan-300 hover:text-cyan-200"
+            href="https://github.com/agammann/compass-webmcp"
+          >
+            public MIT-licensed source
+          </a>
+          .
         </p>
       </section>
     </InformationPage>

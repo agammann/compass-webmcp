@@ -1,8 +1,8 @@
 ---
 title: Compass agent guide
-description: How agents and evaluators should understand and use Compass
+description: How agents and users should understand and use Compass
 canonical: https://compass-control-plane.alx21.chatgpt.site/agents.md
-last-updated: 2026-09-02
+last-updated: 2026-09-29
 ---
 
 # Compass agent guide
@@ -48,3 +48,7 @@ Tools return concise objects with `ok: false`, a stable error code, and a human-
 - Documentation: https://compass-control-plane.alx21.chatgpt.site/docs
 - Privacy: https://compass-control-plane.alx21.chatgpt.site/privacy
 - Source: https://github.com/agammann/compass-webmcp
+
+## Saved data and control
+
+Backups contain content and settings, excluding activity and undo history. Import validates references before replacement, accepts up to 20 MB, and keeps WebMCP off until the person enables it. Reset and import require confirmation. Undo refuses to overwrite newer edits or delete referenced content. Browser storage is not encrypted or synced; export backups regularly. A browser agent may send permitted tool results to its provider.
