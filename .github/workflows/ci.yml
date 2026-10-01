@@ -20,11 +20,16 @@ jobs:
       - run: pnpm test
       - run: pnpm lint
       - run: pnpm typecheck
+      - run: pnpm security:audit
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm build
       - run: pnpm test:e2e
+      - run: pnpm exec playwright install --with-deps chrome
+      - run: pnpm test:webmcp --reporter=list,json
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: test-results/native-webmcp.json
       - uses: actions/upload-artifact@v4
-        if: failure()
+        if: always()
         with:
           name: browser-test-results
           path: test-results/

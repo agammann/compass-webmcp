@@ -155,27 +155,56 @@ export function CompassApp() {
   }, []);
 
   const settings = snapshot?.settings;
-  const registrationSettings = settings ? JSON.stringify(settings) : undefined;
+  const registrationSettings = settings
+    ? JSON.stringify({
+        permissions: {
+          webmcpEnabled: settings.permissions.webmcpEnabled,
+          readEnabled: settings.permissions.readEnabled,
+          writeEnabled: settings.permissions.writeEnabled,
+        },
+      })
+    : undefined;
   useEffect(() => {
     if (!registrationSettings) return;
-    const settings = JSON.parse(registrationSettings) as NonNullable<
-      WorkspaceSnapshot['settings']
-    >;
+    const settings = JSON.parse(registrationSettings) as {
+      permissions: Pick<
+        AgentPermissions,
+        'webmcpEnabled' | 'readEnabled' | 'writeEnabled'
+      >;
+    };
     let cancelled = false;
-    void registerCompassTools(settings, {
-      contextTimeoutMs: 8_000,
-      pollIntervalMs: 100,
-    }).then((state) => {
-      if (!cancelled)
-        setWebmcp({
-          supported: state.supported,
-          registered: state.registered,
-          ready: true,
-          error: state.error,
-        });
-    });
+    let generation = 0;
+    const register = () => {
+      const current = ++generation;
+      void registerCompassTools(settings, {
+        contextTimeoutMs: 8_000,
+        pollIntervalMs: 100,
+      }).then((state) => {
+        if (!cancelled && current === generation)
+          setWebmcp({
+            supported: state.supported,
+            registered: state.registered,
+            ready: true,
+            error: state.error,
+          });
+      });
+    };
+    const hide = () => {
+      generation++;
+      unregisterCompassTools();
+      setWebmcp((current) => ({ ...current, registered: [], ready: false }));
+    };
+    const show = (event: PageTransitionEvent) => {
+      if (event.persisted) register();
+    };
+    register();
+    window.addEventListener('pagehide', hide);
+    window.addEventListener('pageshow', show);
     return () => {
       cancelled = true;
+      generation++;
+      window.removeEventListener('pagehide', hide);
+      window.removeEventListener('pageshow', show);
       unregisterCompassTools();
     };
   }, [registrationSettings]);
