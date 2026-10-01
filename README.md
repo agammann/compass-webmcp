@@ -55,6 +55,8 @@ Every call validates arguments and checks live settings inside the same IndexedD
 Use Node.js 24 and pnpm 11.19.0.
 
 ```sh
+git clone https://github.com/agammann/compass-webmcp.git
+cd compass-webmcp
 pnpm install --frozen-lockfile
 pnpm dev
 ```
@@ -72,12 +74,41 @@ pnpm start --port 3016
 pnpm test
 pnpm lint
 pnpm typecheck
+pnpm security:audit
 pnpm exec playwright install chromium
 pnpm build
 pnpm test:e2e
+pnpm exec playwright install chrome
+pnpm test:webmcp
 ```
 
-Tests cover repository persistence, import integrity, permission changes, safe undo, manual browser workflows, mobile navigation and a simulated browser WebMCP adapter. Simulated registration does not establish native browser compatibility; release verification also exercises the live site's native tools. GitHub Actions runs the same checks.
+Tests cover repository persistence, import integrity, permission changes, safe undo, manual browser workflows, mobile navigation and a simulated browser WebMCP adapter. The separate native suite uses real Chrome with WebMCP enabled; it fails if the native API is absent. GitHub Actions runs both suites and retains the native browser version and results.
+
+The native suite discovers and calls all ten tools, verifies visible writes, reload persistence and human Undo, rejects invalid inputs, checks individual-item scope and permission revocation, and exercises registration cleanup and back navigation. Every test uses a fresh, isolated browser workspace with fictional data.
+
+Verified on September 30, 2026:
+
+| Environment | Result |
+| --- | --- |
+| Chrome 154.0.8037.93 with WebMCP enabled | All four native tests passed against the production Worker build, including actual back/forward cache restoration. |
+| Edge 154.0.4258.48 with WebMCP enabled | The same four native tests passed against the production Worker build. |
+| Codex in-app browser agent | Discovered and called all ten tools on the published app; writes and activity appeared in the interface. |
+| Ordinary Chromium | Six browser tests passed using the production Worker, including manual use without native WebMCP. |
+
+To try native WebMCP manually in Chrome, enable **WebMCP for testing** in `chrome://flags/#enable-webmcp-testing`, relaunch Chrome, and open Compass. See [Chrome's WebMCP setup](https://developer.chrome.com/docs/ai/webmcp) and [imperative API guide](https://developer.chrome.com/docs/ai/webmcp/imperative-api). WebMCP is experimental; browsers without it still support the manual workspace.
+
+You can also run the native checks against a deployed copy or installed Edge:
+
+```sh
+COMPASS_WEBMCP_URL=https://compass-control-plane.alx21.chatgpt.site pnpm test:webmcp
+COMPASS_WEBMCP_CHANNEL=msedge pnpm test:webmcp
+```
+
+In PowerShell, set `$env:COMPASS_WEBMCP_URL` or `$env:COMPASS_WEBMCP_CHANNEL` before running `pnpm test:webmcp`, then remove the variable when finished. The harness uses serialized tool arguments for Chrome/Edge 154 and object arguments for the API documented for Chrome 155; a passing run establishes compatibility with the browser version recorded in its results.
+
+## Adapt the idea
+
+Try the fictional workspace first, then create a small Pack containing one item and watch how it changes the agent's accessible context. For your own project, start with `lib/seed.ts` for sample content, `lib/webmcp.ts` for tool contracts, and `lib/repository.ts` for the operations shared by tools and the interface. Keep scope checks and Undo attached to the same operations as the app grows. Deployment to another origin creates a separate workspace; export and import content to move it.
 
 ## Project structure
 
