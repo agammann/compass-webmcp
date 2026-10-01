@@ -272,6 +272,7 @@ test('individual-item scope and live read, write and type permissions govern nat
     .getByRole('button', { name: 'Create Pack', exact: true })
     .click();
   await page.getByRole('button', { name: 'Activate', exact: true }).click();
+  await expect.poll(() => toolNames(page)).toEqual(names);
   expect(await call(page, 'get_active_context')).toMatchObject({
     ok: true,
     accessibleItemCount: 1,
@@ -287,10 +288,12 @@ test('individual-item scope and live read, write and type permissions govern nat
     code: 'TYPE_PERMISSION_DENIED',
   });
   await page.getByRole('button', { name: 'tasks', exact: true }).click();
+  await expect.poll(() => toolNames(page)).toEqual(names);
   expect(
     await call(page, 'get_personal_item', { id: 'task-dns' }),
   ).toMatchObject({ ok: false, code: 'ITEM_NOT_FOUND' });
   await page.getByRole('button', { name: 'tasks', exact: true }).click();
+  await expect.poll(() => toolNames(page)).toEqual(names);
   // Retain a real native discovery handle across revocation, without replacing the browser API.
   await page.evaluate(async () =>
     Object.assign(window, {
