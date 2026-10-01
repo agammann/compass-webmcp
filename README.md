@@ -42,6 +42,8 @@ Tools register through `document.modelContext`, with `navigator.modelContext` fa
 
 Every call validates arguments and checks live settings inside the same IndexedDB transaction as its operation. Disabling write removes mutation tools and rejects retained calls. A Pack containing an individual item does not authorize its entire Space. Content is treated as data; snippets are never executed. Scope checks constrain Compass tools, not every action a browser agent could perform with separate browser permissions.
 
+Pack and allowed-type changes use those live checks without rebuilding tool handles. Registration refreshes when WebMCP, read or write access changes, and tools clean up on page hide and register again when the page is restored from the back/forward cache.
+
 ## Undo, persistence and backups
 
 - New agent item writes, links and Pack creation have a local activity entry and Undo action. Undo will refuse to overwrite later edits, remove referenced items, or remove an activated/changed Pack. Older actions without a safe snapshot must be edited manually.

@@ -39,6 +39,13 @@ type ModelContext = {
   ): Promise<unknown> | unknown;
 };
 
+type RegistrationSettings = {
+  permissions: Pick<
+    AppSettings['permissions'],
+    'webmcpEnabled' | 'readEnabled' | 'writeEnabled'
+  >;
+};
+
 declare global {
   interface Document {
     modelContext?: ModelContext;
@@ -350,7 +357,7 @@ async function scopedItem(
   return { ...active, item };
 }
 
-function createDefinitions(settings: AppSettings): ToolDefinition[] {
+function createDefinitions(settings: RegistrationSettings): ToolDefinition[] {
   const read = settings.permissions.readEnabled;
   const write = settings.permissions.writeEnabled;
   const definitions: ToolDefinition[] = [
@@ -789,7 +796,7 @@ export function exposedToolInfo(settings?: AppSettings) {
 }
 
 export async function registerCompassTools(
-  settings: AppSettings,
+  settings: RegistrationSettings,
   options: { contextTimeoutMs?: number; pollIntervalMs?: number } = {},
 ) {
   activeController?.abort();

@@ -155,12 +155,23 @@ export function CompassApp() {
   }, []);
 
   const settings = snapshot?.settings;
-  const registrationSettings = settings ? JSON.stringify(settings) : undefined;
+  const registrationSettings = settings
+    ? JSON.stringify({
+        permissions: {
+          webmcpEnabled: settings.permissions.webmcpEnabled,
+          readEnabled: settings.permissions.readEnabled,
+          writeEnabled: settings.permissions.writeEnabled,
+        },
+      })
+    : undefined;
   useEffect(() => {
     if (!registrationSettings) return;
-    const settings = JSON.parse(registrationSettings) as NonNullable<
-      WorkspaceSnapshot['settings']
-    >;
+    const settings = JSON.parse(registrationSettings) as {
+      permissions: Pick<
+        AgentPermissions,
+        'webmcpEnabled' | 'readEnabled' | 'writeEnabled'
+      >;
+    };
     let cancelled = false;
     let generation = 0;
     const register = () => {

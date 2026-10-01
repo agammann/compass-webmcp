@@ -256,6 +256,14 @@ test('invalid native inputs do not create or change stored items', async ({
 test('individual-item scope and live read, write and type permissions govern native tools', async ({
   page,
 }) => {
+  await page.evaluate(() => {
+    const changes = { count: 0 };
+    Object.assign(window, { compassNativeChanges: changes });
+    (document.modelContext as unknown as EventTarget).addEventListener(
+      'toolchange',
+      () => changes.count++,
+    );
+  });
   await nav(page, 'Context Packs');
   await page.getByRole('button', { name: 'Create Pack', exact: true }).click();
   await page.getByLabel('Pack name').fill('Only DNS');
@@ -294,6 +302,19 @@ test('individual-item scope and live read, write and type permissions govern nat
   ).toMatchObject({ ok: false, code: 'ITEM_NOT_FOUND' });
   await page.getByRole('button', { name: 'tasks', exact: true }).click();
   await expect.poll(() => toolNames(page)).toEqual(names);
+  await expect(
+    page.getByRole('button', { name: 'tasks', exact: true }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  expect(
+    await page.evaluate(
+      () =>
+        (
+          window as unknown as {
+            compassNativeChanges: { count: number };
+          }
+        ).compassNativeChanges.count,
+    ),
+  ).toBe(0);
   // Retain a real native discovery handle across revocation, without replacing the browser API.
   await page.evaluate(async () =>
     Object.assign(window, {
