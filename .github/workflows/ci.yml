@@ -59,7 +59,7 @@ jobs:
           path: |
             test-results/
             reports/dependency-*
-            ../compass-clean-consumer/test-results/
+            ${{ runner.workspace }}/compass-clean-consumer/test-results/
           overwrite: true
   publish:
     needs: verify
