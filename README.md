@@ -4,6 +4,8 @@
 
 Keep notes, tasks, bookmarks and code snippets in your browser. Choose exactly which Spaces or individual items an agent can use through a Context Pack. Compass works manually in a normal browser; a browser with page-side WebMCP support can also search and change the same saved workspace through ten tools.
 
+Source release **1.1.1** supports this bounded v1 workspace with [upgrade and recovery guidance](docs/STABILITY.md). It retains one explicitly accepted unpatched braces advisory; available patched updates are applied. See [the exact dependency exception and audit commands](SECURITY.md#accepted-dependency-finding-for-111).
+
 ![Compass desktop workspace](docs/compass-desktop.png)
 
 ## Start using it
@@ -25,18 +27,18 @@ The fictional sample has relevant notes and tasks. For your own workspace, repla
 
 ## WebMCP tools
 
-| Tool | Behavior |
-| --- | --- |
-| `get_active_context` | Report active Pack metadata, permitted types, counts and access settings. Available when WebMCP is enabled, even with read off. |
-| `list_spaces` | List Spaces represented in the active scope, optionally with counts. |
-| `search_personal_context` | Rank matching permitted items; optionally filter types, tags and Space. |
-| `get_personal_item` | Retrieve one permitted item. |
-| `list_recent_activity` | Return activity tied to items visible in the active scope. |
-| `create_personal_item` | Create an allowed item in a Space wholly included in the Pack. |
-| `update_personal_item` | Edit safe fields of an existing permitted item. |
-| `complete_task` | Complete or reopen a permitted task. |
-| `link_personal_items` | Relate two permitted items. |
-| `create_context_pack` | Create an inactive Pack within the current scope; activation remains manual. |
+| Tool                      | Behavior                                                                                                                        |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `get_active_context`      | Report active Pack metadata, permitted types, counts and access settings. Available when WebMCP is enabled, even with read off. |
+| `list_spaces`             | List Spaces represented in the active scope, optionally with counts.                                                            |
+| `search_personal_context` | Rank matching permitted items; optionally filter types, tags and Space.                                                         |
+| `get_personal_item`       | Retrieve one permitted item.                                                                                                    |
+| `list_recent_activity`    | Return activity tied to items visible in the active scope.                                                                      |
+| `create_personal_item`    | Create an allowed item in a Space wholly included in the Pack.                                                                  |
+| `update_personal_item`    | Edit safe fields of an existing permitted item.                                                                                 |
+| `complete_task`           | Complete or reopen a permitted task.                                                                                            |
+| `link_personal_items`     | Relate two permitted items.                                                                                                     |
+| `create_context_pack`     | Create an inactive Pack within the current scope; activation remains manual.                                                    |
 
 Tools register through `document.modelContext`, with `navigator.modelContext` fallback. Compass briefly waits for browsers that inject the API after page load. The interface reports availability; ordinary browsers retain all manual features. This is a page-side integration, with no remote `/mcp` endpoint to add to a desktop MCP client.
 
@@ -56,9 +58,14 @@ Pack and allowed-type changes use those live checks without rebuilding tool hand
 
 Use Node.js 24 and pnpm 11.19.0.
 
+For the reproducible source release, download `compass_1.1.1_source.zip` and its checksums from the [1.1.1 release](https://github.com/agammann/compass-webmcp/releases/tag/v1.1.1). Verify SHA256 before unpacking: PowerShell `Get-FileHash compass_1.1.1_source.zip -Algorithm SHA256`, or Linux `sha256sum -c SHA256SUMS`. Enter the extracted `compass-1.1.1` directory, run `pnpm install --frozen-lockfile`, then `pnpm dev`. The ZIP includes the MIT license and the frozen lockfile. The hosted app has its own deployment acceptance check; a source release alone does not verify the public deployment.
+
+To work from the matching source tag:
+
 ```sh
 git clone https://github.com/agammann/compass-webmcp.git
 cd compass-webmcp
+git checkout v1.1.1
 pnpm install --frozen-lockfile
 pnpm dev
 ```
@@ -76,6 +83,7 @@ pnpm start --port 3016
 pnpm test
 pnpm lint
 pnpm typecheck
+pnpm test:audit-policy
 pnpm security:audit
 pnpm exec playwright install chromium
 pnpm build
@@ -86,16 +94,20 @@ pnpm test:webmcp
 
 Tests cover repository persistence, import integrity, permission changes, safe undo, manual browser workflows, mobile navigation and a simulated browser WebMCP adapter. The separate native suite uses real Chrome with WebMCP enabled; it fails if the native API is absent. GitHub Actions runs both suites and retains the native browser version and results.
 
+`security:audit` checks the full audit against the single [accepted unpatched finding](SECURITY.md#accepted-dependency-finding-for-111); passing that policy means the documented exception matched, rather than an audit with no findings. Source packaging also requires a clean committed tree and tests an unpacked ZIP through a fresh frozen install and build.
+
 The native suite discovers and calls all ten tools, verifies visible writes, reload persistence and human Undo, rejects invalid inputs, checks individual-item scope and permission revocation, and exercises registration cleanup and back navigation. Every test uses a fresh, isolated browser workspace with fictional data.
 
 Verified on September 30, 2026:
 
-| Environment | Result |
-| --- | --- |
+Current local source-release checks on October 6, 2026 used Windows, Node.js **24.19.0**, pnpm **11.19.0**, Playwright **1.58.2** and Chrome **155.0.8059.39**. The actual source ZIP matched every tracked source byte and the MIT license, then passed a fresh frozen install and production build outside the checkout. All 27 product tests, six ordinary browser cases and four native browser cases passed. A fresh ordinary Chrome profile completed capture of all four item types, organization, search, export, clear, import and reload with equal restored content, plus desktop/mobile checks and no page errors or console warnings. Native checks called all ten real tools; running the native gate without the API failed rather than skipping. The dated table below remains historical. These local checks do not establish that a new hosted deployment or published release has passed its delivery checks.
+
+| Environment                              | Result                                                                                                             |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | Chrome 154.0.8037.93 with WebMCP enabled | All four native tests passed against the production Worker build, including actual back/forward cache restoration. |
-| Edge 154.0.4258.48 with WebMCP enabled | The same four native tests passed against the production Worker build. |
-| Codex in-app browser agent | Discovered and called all ten tools on the published app; writes and activity appeared in the interface. |
-| Ordinary Chromium | Six browser tests passed using the production Worker, including manual use without native WebMCP. |
+| Edge 154.0.4258.48 with WebMCP enabled   | The same four native tests passed against the production Worker build.                                             |
+| Codex in-app browser agent               | Discovered and called all ten tools on the published app; writes and activity appeared in the interface.           |
+| Ordinary Chromium                        | Six browser tests passed using the production Worker, including manual use without native WebMCP.                  |
 
 To try native WebMCP manually in Chrome, enable **WebMCP for testing** in `chrome://flags/#enable-webmcp-testing`, relaunch Chrome, and open Compass. See [Chrome's WebMCP setup](https://developer.chrome.com/docs/ai/webmcp) and [imperative API guide](https://developer.chrome.com/docs/ai/webmcp/imperative-api). WebMCP is experimental; browsers without it still support the manual workspace.
 

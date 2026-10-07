@@ -57,6 +57,10 @@ async function call(
       const tool = (await native.getTools()).find((tool) => tool.name === name);
       if (!tool) throw new Error(`Native discovery did not return ${name}`);
       const major = Number(navigator.userAgent.match(/Chrome\/(\d+)/)?.[1]);
+      if (![153, 154, 155].includes(major))
+        throw new Error(
+          `Native verification requires measured Chrome 153/154/155; found ${major}`,
+        );
       try {
         const result = await native.executeTool(
           tool,

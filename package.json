@@ -1,10 +1,10 @@
 {
   "name": "compass",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Browser-local notes, tasks, bookmarks and snippets with scoped WebMCP tools.",
   "private": true,
   "engines": {
-    "node": ">=22.13.0"
+    "node": ">=24.0.0"
   },
   "scripts": {
     "dev": "vinext dev",
@@ -16,7 +16,9 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "test:webmcp": "playwright test --config playwright.webmcp.config.ts",
-    "security:audit": "pnpm audit --audit-level=high"
+    "security:audit": "node scripts/audit-policy.mjs",
+    "test:audit-policy": "node --test scripts/audit-policy.test.mjs",
+    "package:release": "node scripts/package-release.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
@@ -52,6 +54,7 @@
     "vitest": "4.1.11",
     "wrangler": "4.145.0"
   },
+  "license": "MIT",
   "type": "module",
   "packageManager": "pnpm@11.19.0"
 }
