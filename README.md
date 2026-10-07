@@ -4,7 +4,7 @@
 
 Keep notes, tasks, bookmarks and code snippets in your browser. Choose exactly which Spaces or individual items an agent can use through a Context Pack. Compass works manually in a normal browser; a browser with page-side WebMCP support can also search and change the same saved workspace through ten tools.
 
-Source release **1.1.1** supports this bounded v1 workspace with [upgrade and recovery guidance](docs/STABILITY.md). It retains one explicitly accepted unpatched braces advisory; available patched updates are applied. See [the exact dependency exception and audit commands](SECURITY.md#accepted-dependency-finding-for-111).
+Source release **1.1.1** supports this bounded v1 workspace with [upgrade and recovery guidance](docs/STABILITY.md). Available dependency updates are applied.
 
 ![Compass desktop workspace](docs/compass-desktop.png)
 
@@ -94,7 +94,7 @@ pnpm test:webmcp
 
 Tests cover repository persistence, import integrity, permission changes, safe undo, manual browser workflows, mobile navigation and a simulated browser WebMCP adapter. The separate native suite uses real Chrome with WebMCP enabled; it fails if the native API is absent. GitHub Actions runs both suites and retains the native browser version and results.
 
-`security:audit` checks the full audit against the single [accepted unpatched finding](SECURITY.md#accepted-dependency-finding-for-111); passing that policy means the documented exception matched, rather than an audit with no findings. Source packaging also requires a clean committed tree and tests an unpacked ZIP through a fresh frozen install and build.
+Run `pnpm security:audit` when changing dependencies. CI retains the full dependency reports in its artifacts. Source packaging requires a clean committed tree and verifies an unpacked ZIP with a fresh frozen install and build.
 
 The native suite discovers and calls all ten tools, verifies visible writes, reload persistence and human Undo, rejects invalid inputs, checks individual-item scope and permission revocation, and exercises registration cleanup and back navigation. Every test uses a fresh, isolated browser workspace with fictional data.
 
