@@ -519,3 +519,40 @@ describe('scope and transaction regressions', () => {
     ).toMatchObject({ ok: false, code: 'OPERATION_FAILED' });
   });
 });
+
+describe('bounded schema validation after the Zod update', () => {
+  const item = {
+    type: 'note',
+    spaceId: 'space',
+    title: ' Note ',
+    body: '',
+    tags: [],
+  };
+
+  it('preserves normalization and the valid tags boundary', () => {
+    expect(
+      itemInputSchema.parse({ ...item, tags: Array(20).fill('tag') }).title,
+    ).toBe('Note');
+    expect(itemInputSchema.safeParse({ ...item, unknown: true }).success).toBe(
+      false,
+    );
+    expect(
+      itemInputSchema.safeParse({ ...item, tags: Array(21).fill('tag') })
+        .success,
+    ).toBe(false);
+  });
+
+  it('rejects oversized collections without allocating an issue for each element', () => {
+    for (const tags of [
+      Array(10_000).fill(null),
+      Array(10_000).fill({ invalid: true }),
+    ]) {
+      const result = itemInputSchema.safeParse({ ...item, tags });
+      expect(result.success).toBe(false);
+      if (result.success) continue;
+      expect(result.error.issues).toHaveLength(1);
+      expect(result.error.issues[0].code).toBe('too_big');
+      expect(result.error.issues[0].path).toEqual(['tags']);
+    }
+  });
+});
