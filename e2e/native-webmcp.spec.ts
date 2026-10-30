@@ -57,9 +57,9 @@ async function call(
       const tool = (await native.getTools()).find((tool) => tool.name === name);
       if (!tool) throw new Error(`Native discovery did not return ${name}`);
       const major = Number(navigator.userAgent.match(/Chrome\/(\d+)/)?.[1]);
-      if (![153, 154, 155, 156].includes(major))
+      if (![153, 154, 155, 156, 157].includes(major))
         throw new Error(
-          `Native harness supports Chrome 153/154/155/156; found ${major}`,
+          `Native harness supports Chrome 153/154/155/156/157; found ${major}`,
         );
       try {
         const result = await native.executeTool(

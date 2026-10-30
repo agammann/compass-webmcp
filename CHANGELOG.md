@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.2
+
+2026-10-30
+
+- Verify the unchanged ten native WebMCP tools and permission lifecycle in Chrome 157 by extending the tested browser-version gate after all four native cases passed locally.
+- Keep the browser workspace, IndexedDB schema, version 1 backups, and tool contracts unchanged.
+
 ## 1.1.1
 
 2026-10-06

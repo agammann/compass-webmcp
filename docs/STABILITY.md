@@ -1,6 +1,6 @@
 # Compass v1 support and recovery
 
-Release 1.1.1 supports the ordinary browser workspace: create and edit Spaces,
+Release 1.1.2 supports the ordinary browser workspace: create and edit Spaces,
 notes, tasks, bookmarks and snippets; search; Context Pack selection; Activity
 and safe Undo; reload; and version 1 JSON export/import. The bounded newcomer
 journey uses fictional records and restores exported content in a fresh browser
@@ -17,9 +17,10 @@ account recovery if browser data and backups are both lost.
 Within v1, version 1 exports remain readable and the documented ten WebMCP tool
 names and validated argument contracts remain supported. Ordinary controls work
 without WebMCP. The experimental native integration is measured separately:
-Chrome 155 uses object arguments; dated Chrome/Edge 154 records used serialized
-arguments. A browser must expose the real API, and an agent must support page
-tool discovery. This does not establish support for every browser or agent.
+Chrome 155 and locally tested Chrome 157 use object arguments; dated
+Chrome/Edge 154 records used serialized arguments. A browser must expose the
+real API, and an agent must support page tool discovery. This does not
+establish support for every browser or agent.
 
 If a save conflicts with another tab, reopen the item before editing again. Undo
 refuses to overwrite later changes or remove referenced content. Read the error
@@ -27,7 +28,7 @@ and use manual editing if a safe Undo is unavailable. For a rejected backup,
 retain the original file, correct its structure/references and retry; do not
 clear the current workspace to try to fix an invalid import.
 
-Upgrading the source from 1.1.0 to 1.1.1 requires Node.js 24+, pnpm 11.19.0 and
+Upgrading to source release 1.1.2 requires Node.js 24+, pnpm 11.19.0 and
 the frozen lockfile. No IndexedDB or export migration is introduced. A deployment
 to another origin creates a separate workspace; export/import is the supported
 transfer. Remove a self-hosted deployment using its host's normal controls after
