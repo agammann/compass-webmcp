@@ -409,7 +409,9 @@ function createDefinitions(settings: RegistrationSettings): ToolDefinition[] {
             .map((space) => ({
               id: space.id,
               name: space.name,
-              description: space.description,
+              ...(active.pack.spaceIds.includes(space.id)
+                ? { description: space.description }
+                : {}),
               ...(valid.data.includeCounts
                 ? {
                     itemCount: items.filter((item) => item.spaceId === space.id)
@@ -502,7 +504,21 @@ function createDefinitions(settings: RegistrationSettings): ToolDefinition[] {
             await db.activity.orderBy('timestamp').reverse().toArray()
           )
             .filter((entry) => entry.itemId && visible.has(entry.itemId))
-            .slice(0, valid.data.limit ?? 12);
+            .slice(0, valid.data.limit ?? 12)
+            .map((entry) => {
+              const { relatedItemId, ...rest } = entry;
+              const crossItem = entry.operation === 'linked items' ||
+                (entry.operation === 'undid action' && (!entry.undoKind || entry.undoKind === 'link'));
+              if (crossItem && (!relatedItemId || !visible.has(relatedItemId))) {
+                return {
+                  ...rest,
+                  result: entry.operation === 'linked items'
+                    ? 'Linked items; details are outside the active scope or unavailable.'
+                    : 'Undid an action; details are outside the active scope or unavailable.',
+                };
+              }
+              return relatedItemId ? { ...rest, relatedItemId } : rest;
+            });
           return pass({ activity });
         },
       },

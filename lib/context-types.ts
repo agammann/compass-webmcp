@@ -64,6 +64,8 @@ export interface ActivityEntry {
   operation: string;
   itemId?: string;
   itemTitle?: string;
+  relatedItemId?: string;
+  undoKind?: UndoRecord['kind'];
   result: string;
   status: 'success' | 'denied' | 'error' | 'undone';
   undoId?: string;
