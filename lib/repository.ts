@@ -584,6 +584,7 @@ export async function linkItems(
           operation: 'linked items',
           itemId: source.id,
           itemTitle: source.title,
+          relatedItemId: target.id,
           result: `Linked “${source.title}” ${relation} “${target.title}”`,
           status: 'success',
         },
@@ -667,6 +668,8 @@ export async function undoActivity(activityId: string) {
       operation: 'undid action',
       itemId: activity.itemId,
       itemTitle: activity.itemTitle,
+      relatedItemId: activity.relatedItemId,
+      undoKind: undo.kind,
       result: `Undid: ${activity.result}`,
       status: 'success',
     });

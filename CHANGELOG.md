@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.3
+
+2026-10-30
+
+- Tighten Context Pack scoping for Space metadata and activity responses.
+
 ## 1.1.2
 
 2026-10-30
