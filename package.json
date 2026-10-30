@@ -1,6 +1,6 @@
 {
   "name": "compass",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Browser-local notes, tasks, bookmarks and snippets with scoped WebMCP tools.",
   "private": true,
   "engines": {

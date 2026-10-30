@@ -4,7 +4,7 @@
 
 Keep notes, tasks, bookmarks and code snippets in your browser. Choose exactly which Spaces or individual items an agent can use through a Context Pack. Compass works manually in a normal browser; a browser with page-side WebMCP support can also search and change the same saved workspace through ten tools.
 
-Source release **1.1.1** supports this bounded v1 workspace with [upgrade and recovery guidance](docs/STABILITY.md). Available dependency updates are applied.
+Source release **1.1.2** supports this bounded v1 workspace with [upgrade and recovery guidance](docs/STABILITY.md). Available dependency updates are applied.
 
 ![Compass desktop workspace](docs/compass-desktop.png)
 
@@ -58,14 +58,14 @@ Pack and allowed-type changes use those live checks without rebuilding tool hand
 
 Use Node.js 24 and pnpm 11.19.0.
 
-For the reproducible source release, download `compass_1.1.1_source.zip` and its checksums from the [1.1.1 release](https://github.com/agammann/compass-webmcp/releases/tag/v1.1.1). Verify SHA256 before unpacking: PowerShell `Get-FileHash compass_1.1.1_source.zip -Algorithm SHA256`, or Linux `sha256sum -c SHA256SUMS`. Enter the extracted `compass-1.1.1` directory, run `pnpm install --frozen-lockfile`, then `pnpm dev`. The ZIP includes the MIT license and the frozen lockfile. The hosted app has its own deployment acceptance check; a source release alone does not verify the public deployment.
+For the reproducible source release, download `compass_1.1.2_source.zip` and its checksums from the [1.1.2 release](https://github.com/agammann/compass-webmcp/releases/tag/v1.1.2). Verify SHA256 before unpacking: PowerShell `Get-FileHash compass_1.1.2_source.zip -Algorithm SHA256`, or Linux `sha256sum -c SHA256SUMS`. Enter the extracted `compass-1.1.2` directory, run `pnpm install --frozen-lockfile`, then `pnpm dev`. The ZIP includes the MIT license and the frozen lockfile. The hosted app has its own deployment acceptance check; a source release alone does not verify the public deployment.
 
 To work from the matching source tag:
 
 ```sh
 git clone https://github.com/agammann/compass-webmcp.git
 cd compass-webmcp
-git checkout v1.1.1
+git checkout v1.1.2
 pnpm install --frozen-lockfile
 pnpm dev
 ```
@@ -98,9 +98,11 @@ Run `pnpm security:audit` when changing dependencies. CI retains the full depend
 
 The native suite discovers and calls all ten tools, verifies visible writes, reload persistence and human Undo, rejects invalid inputs, checks individual-item scope and permission revocation, and exercises registration cleanup and back navigation. Every test uses a fresh, isolated browser workspace with fictional data.
 
-Verified on September 30, 2026:
+Verification history:
 
-Current local source-release checks on October 6, 2026 used Windows, Node.js **24.19.0**, pnpm **11.19.0**, Playwright **1.58.2** and Chrome **155.0.8059.39**. The actual source ZIP matched every tracked source byte and the MIT license, then passed a fresh frozen install and production build outside the checkout. All 27 product tests, six ordinary browser cases and four native browser cases passed. A fresh ordinary Chrome profile completed capture of all four item types, organization, search, export, clear, import and reload with equal restored content, plus desktop/mobile checks and no page errors or console warnings. Native checks called all ten real tools; running the native gate without the API failed rather than skipping. The dated table below remains historical. These local checks do not establish that a new hosted deployment or published release has passed its delivery checks.
+The 1.1.1 local source-release checks on October 6, 2026 used Windows, Node.js **24.19.0**, pnpm **11.19.0**, Playwright **1.58.2** and Chrome **155.0.8059.39**. The actual source ZIP matched every tracked source byte and the MIT license, then passed a fresh frozen install and production build outside the checkout. All 27 product tests, six ordinary browser cases and four native browser cases passed. A fresh ordinary Chrome profile completed capture of all four item types, organization, search, export, clear, import and reload with equal restored content, plus desktop/mobile checks and no page errors or console warnings. Native checks called all ten real tools; running the native gate without the API failed rather than skipping. The dated table below remains historical. These local checks do not establish that a new hosted deployment or published release has passed its delivery checks.
+
+On October 30, 2026, all four native cases also passed in Chrome **157.0.8103.15** against an isolated local Worker with fictional IndexedDB data. This verifies the browser API used by those cases; the hosted Compass Site was not retested in Chrome 157.
 
 The [published 1.1.1 release](https://github.com/agammann/compass-webmcp/releases/tag/v1.1.1) and [main CI run](https://github.com/agammann/compass-webmcp/actions/runs/37577690013) passed delivery checks; the downloaded ZIP matched all 72 released source files and passed a fresh frozen install and production build. That fresh source passed six ordinary browser cases and four native WebMCP cases in Chrome **155.0.8059.39**. The [public deployment](https://compass-control-plane.alx21.chatgpt.site/) matched the released source and passed the newcomer capture, organization, export/import, reload and mobile flow without page errors or console warnings, plus all four native cases covering ten tools with no skips.
 
