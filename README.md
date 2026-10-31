@@ -4,7 +4,7 @@
 
 Keep notes, tasks, bookmarks and code snippets in your browser. Choose exactly which Spaces or individual items an agent can use through a Context Pack. Compass works manually in a normal browser; a browser with page-side WebMCP support can also search and change the same saved workspace through ten tools.
 
-Source release **1.1.4** supports this bounded v1 workspace with [upgrade and recovery guidance](docs/STABILITY.md). Available dependency updates are applied.
+Source release **1.1.5** supports this bounded v1 workspace with [upgrade and recovery guidance](docs/STABILITY.md). Available dependency updates are applied.
 
 ![Compass desktop workspace](docs/compass-desktop.png)
 
@@ -54,6 +54,7 @@ Pack and allowed-type changes use those live checks without rebuilding tool hand
 
 - New agent item writes, links and Pack creation have a local activity entry and Undo action. Undo will refuse to overwrite later edits, remove referenced items, or remove an activated/changed Pack. Older actions without a safe snapshot must be edited manually.
 - Same-origin tabs observe committed database changes. An editor opened before another change refuses a stale save; reopen the item to use current content.
+- After updating Compass, refresh all open Compass tabs. Tabs still running older code can use older permission behavior until refreshed.
 - Export includes Spaces, items, Packs, relations and settings. Activity and undo history are local and are not included in backups.
 - Import accepts version 1 Compass JSON up to 20 MB, validates IDs and cross-references before replacement, and requires confirmation. Invalid files leave the existing workspace intact. Imported WebMCP access stays off until you re-enable it.
 - Resetting the sample and clearing data require confirmation. Export first. Local storage is not encrypted, and browser eviction or private-mode cleanup can remove it.
@@ -62,14 +63,14 @@ Pack and allowed-type changes use those live checks without rebuilding tool hand
 
 Use Node.js 24 and pnpm 11.19.0.
 
-For the reproducible source release, download `compass_1.1.4_source.zip` and its checksums from the [1.1.4 release](https://github.com/agammann/compass-webmcp/releases/tag/v1.1.4). Verify SHA256 before unpacking: PowerShell `Get-FileHash compass_1.1.4_source.zip -Algorithm SHA256`, or Linux `sha256sum -c SHA256SUMS`. Enter the extracted `compass-1.1.4` directory, run `pnpm install --frozen-lockfile`, then `pnpm dev`. The ZIP includes the MIT license and the frozen lockfile. The hosted app has its own deployment acceptance check; a source release alone does not verify the public deployment.
+For the reproducible source release, download `compass_1.1.5_source.zip` and its checksums from the [1.1.5 release](https://github.com/agammann/compass-webmcp/releases/tag/v1.1.5). Verify SHA256 before unpacking: PowerShell `Get-FileHash compass_1.1.5_source.zip -Algorithm SHA256`, or Linux `sha256sum -c SHA256SUMS`. Enter the extracted `compass-1.1.5` directory, run `pnpm install --frozen-lockfile`, then `pnpm dev`. The ZIP includes the MIT license and the frozen lockfile. The hosted app has its own deployment acceptance check; a source release alone does not verify the public deployment.
 
 To work from the matching source tag:
 
 ```sh
 git clone https://github.com/agammann/compass-webmcp.git
 cd compass-webmcp
-git checkout v1.1.4
+git checkout v1.1.5
 pnpm install --frozen-lockfile
 pnpm dev
 ```

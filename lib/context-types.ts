@@ -48,10 +48,20 @@ export interface AgentPermissions {
   allowedTypes: Record<ItemType, boolean>;
 }
 
+export interface PermissionVersions {
+  webmcpEnabled: number;
+  readEnabled: number;
+  writeEnabled: number;
+  allowedTypes: Record<ItemType, number>;
+}
+
 export interface AppSettings {
   id: 'settings';
   initialized: boolean;
   permissions: AgentPermissions;
+  // Local-only generation changes whenever the workspace is replaced.
+  workspaceEpoch?: string;
+  permissionVersions?: PermissionVersions;
   activeSpaceId?: string;
   activePackId?: string;
 }

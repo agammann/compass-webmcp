@@ -74,6 +74,8 @@ import {
   undoActivity,
   updateItem,
   updateSettings,
+  updatePermissions,
+  type PermissionPatch,
 } from '@/lib/repository';
 import { rankItems } from '@/lib/search';
 import {
@@ -239,16 +241,10 @@ export function CompassApp() {
     setNotice(message);
     window.setTimeout(() => setNotice(undefined), 3500);
   };
-  const setPermissions = async (patch: Partial<AgentPermissions>) => {
+  const setPermissions = async (patch: PermissionPatch) => {
     if (!settings) return;
     try {
-      await updateSettings({
-        permissions: {
-          ...settings.permissions,
-          ...patch,
-          allowedTypes: patch.allowedTypes ?? settings.permissions.allowedTypes,
-        },
-      });
+      await updatePermissions(patch, settings);
     } catch (error) {
       flash(
         error instanceof Error ? error.message : 'Permission change failed.',
@@ -259,7 +255,6 @@ export function CompassApp() {
     if (!settings) return;
     await setPermissions({
       allowedTypes: {
-        ...settings.permissions.allowedTypes,
         [type]: !settings.permissions.allowedTypes[type],
       },
     });
