@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.5
+
+2026-10-31
+
+- Preserve concurrent Agent Access changes and prompt for review when a setting is stale.
+- Refresh all open Compass tabs after updating so each uses the current permission controls.
+
 ## 1.1.4
 
 2026-10-31

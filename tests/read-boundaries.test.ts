@@ -2,9 +2,14 @@ import 'fake-indexeddb/auto';
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
   activatePack, completeTask, createItem, createPack, createSpace, db, linkItems,
-  startEmptyWorkspace, undoActivity, updateSettings,
+  startEmptyWorkspace, undoActivity, updatePermissions, getSnapshot,
 } from '@/lib/repository';
 import { registerCompassTools, unregisterCompassTools } from '@/lib/webmcp';
+import type { AgentPermissions } from '@/lib/context-types';
+
+async function updateSettings({ permissions }: { permissions: AgentPermissions }) {
+  return updatePermissions(permissions, (await getSnapshot()).settings!);
+}
 
 type Tool = { name: string; execute: (args: unknown) => Promise<{ ok: boolean; spaces: Record<string, unknown>[]; activity: { id: string }[] }> };
 const permissions = {

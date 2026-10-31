@@ -13,7 +13,7 @@ import {
   itemInputSchema,
   loadDemoWorkspace,
   undoActivity,
-  updateSettings,
+  updatePermissions,
   createItem,
   updateItem,
   createPack,
@@ -22,6 +22,11 @@ import {
   activatePack,
 } from '@/lib/repository';
 import { registerCompassTools, unregisterCompassTools } from '@/lib/webmcp';
+import type { AgentPermissions } from '@/lib/context-types';
+
+async function updateSettings({ permissions }: { permissions: AgentPermissions }) {
+  return updatePermissions(permissions, (await getSnapshot()).settings!);
+}
 
 beforeEach(async () => {
   unregisterCompassTools();
@@ -495,9 +500,8 @@ describe('scope and transaction regressions', () => {
   });
   it('keeps writes and permission revocation serialized and returns bounded errors', async () => {
     const tools = await toolsForSample();
-    const revoked = updateSettings({
-      permissions: { ...demoSettings.permissions, writeEnabled: false },
-    });
+    const expected = (await getSnapshot()).settings!;
+    const revoked = updatePermissions({ writeEnabled: false }, expected);
     const write = tools
       .get('complete_task')!
       .execute({ id: 'task-dns', completed: true });

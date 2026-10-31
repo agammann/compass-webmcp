@@ -5,10 +5,12 @@ import {
   DEFAULT_PERMISSIONS,
   ITEM_TYPES,
   type ActivityEntry,
+  type AgentPermissions,
   type AppSettings,
   type ContextPack,
   type ExportBundle,
   type PersonalItem,
+  type PermissionVersions,
   type Relation,
   type Space,
   type UndoRecord,
@@ -180,6 +182,13 @@ class CompassDatabase extends Dexie {
 }
 
 export const db = new CompassDatabase();
+// Keep this separate from the exported settings record and within the v1 store.
+const workspaceMeta = db.table<{ id: 'workspace-generation'; epoch: string; versions: PermissionVersions }, string>('settings');
+const newWorkspaceMeta = () => ({
+  id: 'workspace-generation' as const,
+  epoch: uid('workspace'),
+  versions: { webmcpEnabled: 0, readEnabled: 0, writeEnabled: 0, allowedTypes: { note: 0, task: 0, bookmark: 0, snippet: 0 } },
+});
 const uid = (prefix: string) => `${prefix}-${crypto.randomUUID()}`;
 const iso = () => new Date().toISOString();
 export const notifyChange = () => {
@@ -189,16 +198,17 @@ export const notifyChange = () => {
 
 export async function getSnapshot(): Promise<WorkspaceSnapshot> {
   return db.transaction('r', db.tables, async () => {
-    const [settings, spaces, items, packs, activity, relations] =
+    const [settings, metadata, spaces, items, packs, activity, relations] =
       await Promise.all([
         db.settings.get('settings'),
+        workspaceMeta.get('workspace-generation'),
         db.spaces.toArray(),
         db.items.toArray(),
         db.packs.toArray(),
         db.activity.orderBy('timestamp').reverse().limit(100).toArray(),
         db.relations.toArray(),
       ]);
-    return { settings, spaces, items, packs, activity, relations };
+    return { settings: settings && { ...settings, workspaceEpoch: metadata?.epoch, permissionVersions: metadata?.versions }, spaces, items, packs, activity, relations };
   });
 }
 
@@ -228,6 +238,7 @@ async function replaceWithDemoWorkspace(onlyIfMissing = false) {
       await db.items.bulkPut(demoItems);
       await db.packs.put(atlasPack);
       await db.settings.put(structuredClone(demoSettings));
+      await workspaceMeta.put(newWorkspaceMeta());
       await db.activity.put({
         id: uid('activity'),
         timestamp: iso(),
@@ -248,9 +259,12 @@ export async function loadDemoWorkspace() {
 
 export async function getOrInitializeDemoSnapshot(): Promise<WorkspaceSnapshot> {
   const current = await getSnapshot();
-  if (current.settings) return current;
-
-  await replaceWithDemoWorkspace(true);
+  if (!current.settings) await replaceWithDemoWorkspace(true);
+  await db.transaction('rw', db.settings, async () => {
+    if ((await db.settings.get('settings')) && !(await workspaceMeta.get('workspace-generation'))) {
+      await workspaceMeta.put(newWorkspaceMeta());
+    }
+  });
   return getSnapshot();
 }
 
@@ -265,6 +279,7 @@ export async function startEmptyWorkspace() {
         webmcpEnabled: false,
       },
     });
+    await workspaceMeta.put(newWorkspaceMeta());
   });
   notifyChange();
 }
@@ -273,7 +288,7 @@ export async function clearAllLocalData() {
   await startEmptyWorkspace();
 }
 
-export async function updateSettings(patch: Partial<Omit<AppSettings, 'id'>>) {
+export async function updateSettings(patch: Partial<Pick<AppSettings, 'activeSpaceId' | 'activePackId'>>) {
   return db.transaction('rw', db.tables, async () => {
     const current = (await db.settings.get('settings')) ?? {
       id: 'settings' as const,
@@ -282,9 +297,46 @@ export async function updateSettings(patch: Partial<Omit<AppSettings, 'id'>>) {
     };
     await db.settings.put({
       ...current,
-      ...patch,
-      permissions: patch.permissions ?? current.permissions,
+      ...('activeSpaceId' in patch ? { activeSpaceId: patch.activeSpaceId } : {}),
+      ...('activePackId' in patch ? { activePackId: patch.activePackId } : {}),
     });
+    notifyChange();
+  });
+}
+
+export type PermissionPatch = Partial<Omit<AgentPermissions, 'allowedTypes'>> & {
+  allowedTypes?: Partial<AgentPermissions['allowedTypes']>;
+};
+
+export async function updatePermissions(patch: PermissionPatch, expected: Pick<AppSettings, 'workspaceEpoch' | 'permissionVersions'>) {
+  return db.transaction('rw', db.tables, async () => {
+    const current = await db.settings.get('settings');
+    const metadata = await workspaceMeta.get('workspace-generation');
+    if (!current || !metadata || metadata.epoch !== expected.workspaceEpoch || !expected.permissionVersions) {
+      throw new Error('The workspace changed. Review its permissions and try again.');
+    }
+    const versions = structuredClone(metadata.versions);
+    for (const field of ['webmcpEnabled', 'readEnabled', 'writeEnabled'] as const) {
+      if (patch[field] !== undefined) {
+        if (versions[field] !== expected.permissionVersions[field]) throw new Error('Permissions changed in another tab. Review them and try again.');
+        versions[field]++;
+      }
+    }
+    for (const type of ITEM_TYPES) {
+      if (patch.allowedTypes?.[type] !== undefined) {
+        if (versions.allowedTypes[type] !== expected.permissionVersions.allowedTypes[type]) throw new Error('Permissions changed in another tab. Review them and try again.');
+        versions.allowedTypes[type]++;
+      }
+    }
+    await db.settings.put({
+      ...current,
+      permissions: {
+        ...current.permissions,
+        ...patch,
+        allowedTypes: { ...current.permissions.allowedTypes, ...patch.allowedTypes },
+      },
+    });
+    await workspaceMeta.put({ ...metadata, versions });
     notifyChange();
   });
 }
@@ -729,6 +781,7 @@ export async function logDenied(
 export async function exportWorkspace(): Promise<ExportBundle> {
   const snapshot = await getSnapshot();
   if (!snapshot.settings) throw new Error('Workspace is not initialized');
+  const { workspaceEpoch: _workspaceEpoch, permissionVersions: _permissionVersions, ...portableSettings } = snapshot.settings;
   const bundle: ExportBundle = {
     version: 1,
     exportedAt: iso(),
@@ -736,7 +789,7 @@ export async function exportWorkspace(): Promise<ExportBundle> {
     items: snapshot.items,
     packs: snapshot.packs,
     relations: snapshot.relations,
-    settings: snapshot.settings,
+    settings: portableSettings,
   };
   if (
     new TextEncoder().encode(JSON.stringify(bundle, null, 2)).byteLength >
@@ -830,6 +883,7 @@ export async function importWorkspace(text: string) {
       await db.packs.bulkPut(bundle.packs);
       await db.relations.bulkPut(bundle.relations);
       await db.settings.put(bundle.settings);
+      await workspaceMeta.put(newWorkspaceMeta());
       await db.activity.put({
         id: uid('activity'),
         timestamp: iso(),
