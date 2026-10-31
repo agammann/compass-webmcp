@@ -146,7 +146,10 @@ const patchSchema = z
     url: z.string().url().max(2048).nullable().optional(),
     language: z.string().max(60).nullable().optional(),
   })
-  .strict();
+  .strict()
+  .refine((patch) => Object.values(patch).some((value) => value !== undefined), {
+    message: 'Provide at least one field to update.',
+  });
 const updateSchema = z
   .object({ id: z.string().min(1).max(120), patch: patchSchema })
   .strict();
@@ -257,6 +260,7 @@ const schemas = {
           url: { type: ['string', 'null'] },
           language: { type: ['string', 'null'] },
         }),
+        minProperties: 1,
       },
     },
     ['id', 'patch'],
@@ -622,17 +626,19 @@ function createDefinitions(settings: RegistrationSettings): ToolDefinition[] {
             );
             return pass({
               item: {
-                id: item.id,
-                type: item.type,
-                title: item.title,
-                updatedAt: item.updatedAt,
+                id: valid.data.id,
+                ...(!assertAgentAccess(active.settings, active.pack, 'read', item.type)
+                  ? { type: item.type, title: item.title, updatedAt: item.updatedAt }
+                  : {}),
               },
               message: 'Updated and recorded with undo history.',
             });
           } catch (error) {
             return fail(
               'INVALID_INPUT',
-              error instanceof Error ? error.message : undefined,
+              !assertAgentAccess(active.settings, active.pack, 'read', active.item.type) && error instanceof Error
+                ? error.message
+                : undefined,
             );
           }
         },
@@ -653,7 +659,12 @@ function createDefinitions(settings: RegistrationSettings): ToolDefinition[] {
           );
           if ('error' in active) return active.error;
           if (active.item.type !== 'task')
-            return fail('INVALID_INPUT', 'Only task items can be completed.');
+            return fail(
+              'INVALID_INPUT',
+              !assertAgentAccess(active.settings, active.pack, 'read', active.item.type)
+                ? 'Only task items can be completed.'
+                : undefined,
+            );
           const code = assertAgentAccess(
             active.settings,
             active.pack,
@@ -669,10 +680,11 @@ function createDefinitions(settings: RegistrationSettings): ToolDefinition[] {
           );
           return pass({
             task: {
-              id: item.id,
-              title: item.title,
-              completed: item.completed,
-              updatedAt: item.updatedAt,
+              id: valid.data.id,
+              completed: valid.data.completed,
+              ...(!assertAgentAccess(active.settings, active.pack, 'read', item.type)
+                ? { title: item.title, updatedAt: item.updatedAt }
+                : {}),
             },
             message: 'Task state changed with undo history.',
           });
@@ -755,11 +767,20 @@ function createDefinitions(settings: RegistrationSettings): ToolDefinition[] {
           async () => await definition.execute(raw),
         );
       } catch (error) {
+        let mayRead = false;
+        try {
+          const { settings, pack } = await getActiveScope();
+          mayRead = !assertAgentAccess(settings, pack, 'read');
+        } catch {
+          // Fail closed when live permissions cannot be read.
+        }
         return fail(
           'OPERATION_FAILED',
-          error instanceof Error
-            ? error.message
-            : 'Local storage operation failed.',
+          mayRead
+            ? error instanceof Error
+              ? error.message
+              : 'Local storage operation failed.'
+            : undefined,
         );
       }
     },

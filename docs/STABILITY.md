@@ -1,6 +1,6 @@
 # Compass v1 support and recovery
 
-Release 1.1.3 supports the ordinary browser workspace: create and edit Spaces,
+Release 1.1.4 supports the ordinary browser workspace: create and edit Spaces,
 notes, tasks, bookmarks and snippets; search; Context Pack selection; Activity
 and safe Undo; reload; and version 1 JSON export/import. The bounded newcomer
 journey uses fictional records and restores exported content in a fresh browser
@@ -28,7 +28,7 @@ and use manual editing if a safe Undo is unavailable. For a rejected backup,
 retain the original file, correct its structure/references and retry; do not
 clear the current workspace to try to fix an invalid import.
 
-Upgrading to source release 1.1.3 requires Node.js 24+, pnpm 11.19.0 and
+Upgrading to source release 1.1.4 requires Node.js 24+, pnpm 11.19.0 and
 the frozen lockfile. No IndexedDB or export migration is introduced. A deployment
 to another origin creates a separate workspace; export/import is the supported
 transfer. Remove a self-hosted deployment using its host's normal controls after

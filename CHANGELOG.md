@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.4
+
+2026-10-31
+
+- Tighten write acknowledgements when read access is disabled.
+
 ## 1.1.3
 
 2026-10-30
