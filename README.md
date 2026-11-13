@@ -4,7 +4,7 @@
 
 Keep notes, tasks, bookmarks and code snippets in your browser. Choose exactly which Spaces or individual items an agent can use through a Context Pack. Compass works manually in a normal browser; a browser with page-side WebMCP support can also search and change the same saved workspace through ten tools.
 
-Source release **1.1.5** supports this bounded v1 workspace with [upgrade and recovery guidance](docs/STABILITY.md). Available dependency updates are applied.
+Source release **1.1.6** supports this bounded v1 workspace with [upgrade and recovery guidance](docs/STABILITY.md) and includes the patched Vite development tooling.
 
 ![Compass desktop workspace](docs/compass-desktop.png)
 
@@ -63,14 +63,14 @@ Pack and allowed-type changes use those live checks without rebuilding tool hand
 
 Use Node.js 24 and pnpm 11.19.0.
 
-For the reproducible source release, download `compass_1.1.5_source.zip` and its checksums from the [1.1.5 release](https://github.com/agammann/compass-webmcp/releases/tag/v1.1.5). Verify SHA256 before unpacking: PowerShell `Get-FileHash compass_1.1.5_source.zip -Algorithm SHA256`, or Linux `sha256sum -c SHA256SUMS`. Enter the extracted `compass-1.1.5` directory, run `pnpm install --frozen-lockfile`, then `pnpm dev`. The ZIP includes the MIT license and the frozen lockfile. The hosted app has its own deployment acceptance check; a source release alone does not verify the public deployment.
+For the reproducible source release, download `compass_1.1.6_source.zip` and its checksums from the [1.1.6 release](https://github.com/agammann/compass-webmcp/releases/tag/v1.1.6). Verify SHA256 before unpacking: PowerShell `Get-FileHash compass_1.1.6_source.zip -Algorithm SHA256`, or Linux `sha256sum -c SHA256SUMS`. Enter the extracted `compass-1.1.6` directory, run `pnpm install --frozen-lockfile`, then `pnpm dev`. The ZIP includes the MIT license and the frozen lockfile. The hosted app has its own deployment acceptance check; a source release alone does not verify the public deployment.
 
 To work from the matching source tag:
 
 ```sh
 git clone https://github.com/agammann/compass-webmcp.git
 cd compass-webmcp
-git checkout v1.1.5
+git checkout v1.1.6
 pnpm install --frozen-lockfile
 pnpm dev
 ```
