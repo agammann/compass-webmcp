@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.6
+
+2026-11-12
+
+- Update Vite to 8.3.7 and Rolldown to 1.2.18, addressing [GHSA-p4f5-76q4-ffq7](https://github.com/vitejs/vite/security/advisories/GHSA-p4f5-76q4-ffq7). The advisory affects development servers explicitly exposed to the network; the previous source release included affected Vite 8.2.4.
+- Ship the matching React, React DOM and React Server Components 19.2.9 updates already verified on main, along with the tested fake-indexeddb and lint-tool updates.
+- Retain the existing browser workspace, IndexedDB schema, version 1 backups and ten WebMCP tools. Existing published release assets remain unchanged.
+
 ## 1.1.5
 
 2026-10-31
