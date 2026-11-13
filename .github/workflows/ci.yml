@@ -55,7 +55,29 @@ jobs:
           path: release-artifacts/
           if-no-files-found: error
           overwrite: true
-      - name: Verify release artifact round trip
+      - name: Download release artifact
+        id: artifact-download-first
+        continue-on-error: true
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: compass-source
+          path: release-artifacts-roundtrip
+      - name: Wait for artifact visibility
+        if: steps.artifact-download-first.outcome == 'failure'
+        run: sleep 10
+      - name: Retry release artifact download
+        id: artifact-download-second
+        if: steps.artifact-download-first.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: compass-source
+          path: release-artifacts-roundtrip
+      - name: Wait for artifact visibility again
+        if: steps.artifact-download-second.outcome == 'failure'
+        run: sleep 20
+      - name: Final release artifact download attempt
+        if: steps.artifact-download-second.outcome == 'failure'
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: compass-source
@@ -91,3 +113,36 @@ jobs:
           script: |
             const { default: publish } = await import(process.env.GITHUB_WORKSPACE + '/scripts/release.mjs');
             await publish({ github, context, core });
+
+  artifact-retry-guard-test:
+    name: Verify artifact failure guards
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Missing artifact attempt one
+        id: first
+        continue-on-error: true
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: intentionally-missing-artifact
+      - name: Missing artifact attempt two
+        id: second
+        if: steps.first.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: intentionally-missing-artifact
+      - name: Missing artifact attempt three
+        id: third
+        if: steps.second.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: intentionally-missing-artifact
+      - name: Require all missing-artifact attempts to fail
+        if: always()
+        env:
+          FIRST: ${{ steps.first.outcome }}
+          SECOND: ${{ steps.second.outcome }}
+          THIRD: ${{ steps.third.outcome }}
+        run: test "$FIRST" = failure && test "$SECOND" = failure && test "$THIRD" = failure
