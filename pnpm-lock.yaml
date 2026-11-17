@@ -18,8 +18,8 @@ importers:
   .:
     dependencies:
       '@base-ui/react':
-        specifier: 1.7.0
-        version: 1.7.0(@date-fns/tz@1.5.0)(@types/react@19.2.14)(date-fns@4.1.0)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)
+        specifier: 1.9.0
+        version: 1.9.0(@date-fns/tz@1.5.0)(@types/react@19.2.14)(date-fns@4.1.0)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)
       class-variance-authority:
         specifier: 0.7.1
         version: 0.7.1
@@ -115,12 +115,11 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  '@babel/runtime@7.29.7':
-    resolution: {integrity: sha512-Nq8OhGWiZIZGV6hLHoyAKLLcJihP/xFeBMGJoUrxTX2psI8dCifzLhZISFb+VWS3wFMRDmCGw5R+dOySCqPLhw==}
-    engines: {node: '>=6.9.0'}
+  '@babel/runtime@8.1.2':
+    resolution: {integrity: sha512-Ay6HdEKZJAeGs6KKJ/ezCK5ssjFmkvUiR0TEGv/B1abyjLWrQ2RU+M507Ppk0NikhvVFhlEFC1/rHfCiYqSUcw==}
 
-  '@base-ui/react@1.7.0':
-    resolution: {integrity: sha512-j+8QjX44C32jrXD/qyEAGpFr70FRpGL2CY61mQd9nBPWN737CK0xxD1ceJ055rW4RtdvFDT1e7otzdlfxvsYug==}
+  '@base-ui/react@1.9.0':
+    resolution: {integrity: sha512-S8CSYosASBKtpL8SWUfS78rFElfLijiCgA7oHOK22jCJ95FULsYyKwBNFOgudt0RA+/7yNc7F81bOvQnRgbBiQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       '@date-fns/tz': ^1.2.0
@@ -136,8 +135,8 @@ packages:
       date-fns:
         optional: true
 
-  '@base-ui/utils@0.3.2':
-    resolution: {integrity: sha512-oWy1aq/I2GmYjpl4PhEAhzflF8VPGKgZeq0xAWTbfD5KBWyxcN0ZP2+WHSUm/5Z6lVMBDLReLcoXwSYoRc/zNQ==}
+  '@base-ui/utils@0.5.0':
+    resolution: {integrity: sha512-dYGGcEttjkYiMoa5nHm8vLaJ2UcuTWxo3BFAwOYXeRg/q7UVVvA6cacEIXEs3FgBfK1CGtW1ptElqs7wsx+t9A==}
     peerDependencies:
       '@types/react': ^17 || ^18 || ^19
       react: ^17 || ^18 || ^19
@@ -2029,8 +2028,8 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
-  use-sync-external-store@1.6.0:
-    resolution: {integrity: sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==}
+  use-sync-external-store@1.7.0:
+    resolution: {integrity: sha512-6L+EeigHMQhdaIPNIFUKwfWJSwWFQ8gJbJ2DLOs5sDIegTwR9fRxvnM3uciHKjIZhFz+KAv2emhWMRvDmMcY8A==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -2221,30 +2220,30 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
-  '@babel/runtime@7.29.7': {}
+  '@babel/runtime@8.1.2': {}
 
-  '@base-ui/react@1.7.0(@date-fns/tz@1.5.0)(@types/react@19.2.14)(date-fns@4.1.0)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)':
+  '@base-ui/react@1.9.0(@date-fns/tz@1.5.0)(@types/react@19.2.14)(date-fns@4.1.0)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)':
     dependencies:
-      '@babel/runtime': 7.29.7
-      '@base-ui/utils': 0.3.2(@types/react@19.2.14)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)
+      '@babel/runtime': 8.1.2
+      '@base-ui/utils': 0.5.0(@types/react@19.2.14)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)
       '@floating-ui/react-dom': 2.1.9(react-dom@19.2.9(react@19.2.9))(react@19.2.9)
       '@floating-ui/utils': 0.2.12
       react: 19.2.9
       react-dom: 19.2.9(react@19.2.9)
-      use-sync-external-store: 1.6.0(react@19.2.9)
+      use-sync-external-store: 1.7.0(react@19.2.9)
     optionalDependencies:
       '@date-fns/tz': 1.5.0
       '@types/react': 19.2.14
       date-fns: 4.1.0
 
-  '@base-ui/utils@0.3.2(@types/react@19.2.14)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)':
+  '@base-ui/utils@0.5.0(@types/react@19.2.14)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)':
     dependencies:
-      '@babel/runtime': 7.29.7
+      '@babel/runtime': 8.1.2
       '@floating-ui/utils': 0.2.12
       react: 19.2.9
       react-dom: 19.2.9(react@19.2.9)
       reselect: 5.3.0
-      use-sync-external-store: 1.6.0(react@19.2.9)
+      use-sync-external-store: 1.7.0(react@19.2.9)
     optionalDependencies:
       '@types/react': 19.2.14
 
@@ -3707,7 +3706,7 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
-  use-sync-external-store@1.6.0(react@19.2.9):
+  use-sync-external-store@1.7.0(react@19.2.9):
     dependencies:
       react: 19.2.9
 
