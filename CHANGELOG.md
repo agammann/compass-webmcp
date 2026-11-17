@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.8
+
+2026-11-16
+
+- Bypass server-render caching through the root layout and require private browser revalidation for document and RSC responses, reducing stale references to client bundles from an older deployment while preserving browser memory restoration where supported.
+- Add production-Worker checks for repeated GET and HEAD document responses, RSC responses, referenced client asset status/type/content, and missing-asset 404 behavior.
+- Document live delivery acceptance and recovery without clearing browser data. This cache-policy change does not establish or claim to eliminate the cause of the earlier transient hosted asset mismatch.
+- Preserve client asset caching, the browser workspace, IndexedDB name, version 1 backups and ten WebMCP tool contracts. Existing releases remain immutable.
+
 ## 1.1.7
 
 2026-11-16

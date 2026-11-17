@@ -40,6 +40,46 @@ const openItem = (page: Page, title: string) =>
     .filter({ has: page.getByRole('heading', { name: title, exact: true }) })
     .click();
 
+test('entry documents require private revalidation and reference available client assets', async ({ request }) => {
+  const assets = new Set<string>();
+  const checkPolicy = (policy: string | undefined) => {
+    expect(policy?.split(',').map((directive) => directive.trim())).toEqual(
+      expect.arrayContaining(['private', 'no-cache', 'max-age=0', 'must-revalidate']),
+    );
+    expect(policy).not.toMatch(/\b(?:s-maxage|no-store)\b/);
+  };
+  for (const route of ['/', '/docs']) {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const response = await request.get(route);
+      expect(response.status()).toBe(200);
+      expect(response.headers()['content-type']).toContain('text/html');
+      checkPolicy(response.headers()['cache-control']);
+      const html = await response.text();
+      for (const match of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
+        if (/^\/_next\/static\/.*\.(?:js|css)$/.test(match[1])) assets.add(match[1]);
+      }
+    }
+    const head = await request.head(route);
+    expect(head.status()).toBe(200);
+    checkPolicy(head.headers()['cache-control']);
+    const rsc = await request.get(`${route}?_rsc=cache-policy-check`, { headers: { RSC: '1' } });
+    expect(rsc.status()).toBe(200);
+    expect(rsc.headers()['content-type']).toContain('text/x-component');
+    checkPolicy(rsc.headers()['cache-control']);
+  }
+  expect([...assets].some((asset) => asset.endsWith('.js'))).toBe(true);
+  expect([...assets].some((asset) => asset.endsWith('.css'))).toBe(true);
+  for (const asset of assets) {
+    const response = await request.get(asset);
+    expect(response.status(), asset).toBe(200);
+    expect(response.headers()['content-type'], asset).toMatch(
+      asset.endsWith('.css') ? /text\/css/ : /javascript/,
+    );
+    expect((await response.body()).length, asset).toBeGreaterThan(0);
+  }
+  expect((await request.get('/_next/static/chunks/compass-missing-delivery-asset.js')).status()).toBe(404);
+});
+
 test('own workspace: all four types edit, task state, named links, Pack and reload', async ({
   page,
 }) => {

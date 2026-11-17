@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
+// Entry documents must not retain references to client bundles from an older build.
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ??
