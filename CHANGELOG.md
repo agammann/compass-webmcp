@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.7
+
+2026-11-16
+
+- Publish the current tested Tailwind/PostCSS 4.3.5 and TypeScript 7.0.2 toolchain with its frozen lockfile.
+- Include the pinned CI action updates, verified artifact roundtrip and published-release preservation check in the source delivery.
+- Point installation and recovery guidance to this matching source release; retain the workspace, IndexedDB name, version 1 backups and ten WebMCP tool contracts.
+
 ## 1.1.6
 
 2026-11-12
